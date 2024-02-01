@@ -11,6 +11,8 @@ public:
 	Tokenizer(std::string const *source) : m_source(source), m_index(0) {}
 
 	std::optional<std::tuple<Token, std::optional<Token>>> next();
+	std::vector<Token> collect_all();
+
 	inline std::vector<Diagnostic> const &diagnostics() const { return m_diagnostics; }
 
 private:

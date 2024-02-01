@@ -1,0 +1,13 @@
+func main() {
+	let mut pure func method struct enum union
+	+ - * / & | ^ ~ = < > ! ? % @ ( ) [ ] { } . .. ... , : :: ; -> => {
+		let a = 3.14
+		let b = 9.28
+		let c = "hey"
+		let d = 'u'
+		let k = e
+		      + c + d + f
+			  - r - t - v
+		let d = k + 1
+	}
+}

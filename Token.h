@@ -26,6 +26,7 @@ struct Token {
 
 	enum class Symbol {
 		Plus, // +
+		// TODO: PlusPlus (concat)
 		Minus, // -
 		Star, // *
 		Div, // /

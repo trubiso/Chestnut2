@@ -132,6 +132,20 @@ std::optional<std::tuple<Token, std::optional<Token>>> Tokenizer::next() {
 	}
 }
 
+std::vector<Token> Tokenizer::collect_all() {
+	std::vector<Token> tokens{};
+	while (true) {
+		std::optional<std::tuple<Token, std::optional<Token>>> next_token = next();
+		if (!next_token.has_value())
+			break;
+		auto const &[token, semicolon] = next_token.value();
+		if (semicolon.has_value())
+			tokens.push_back(semicolon.value());
+		tokens.push_back(token);
+	}
+	return tokens;
+}
+
 void Tokenizer::consume_whitespace() {
 	while (is_index_valid() && is_whitespace(current().value())) {
 		advance();

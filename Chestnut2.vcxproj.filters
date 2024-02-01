@@ -27,9 +27,13 @@
     <ClInclude Include="Diagnostic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
+    <None Include="source" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tokenizer.cpp">
@@ -37,6 +41,12 @@
     </ClCompile>
     <ClCompile Include="Diagnostic.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
