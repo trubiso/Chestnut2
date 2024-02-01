@@ -128,9 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Combinator.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Diagnostic.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="Span.h" />
+    <ClInclude Include="Stream.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
@@ -142,6 +146,7 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Diagnostic.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
