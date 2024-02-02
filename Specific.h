@@ -30,8 +30,8 @@ inline Parser<Token> angled(Parser<Token> const &parser) {
 	return wrapped(parser, Token::Symbol::Lt, Token::Symbol::Gt);
 }
 
-inline Parser<Token> separated_by_comma(Parser<Token> const &parser) {
-	return separated_by(parser, token_symbol(Token::Symbol::Comma));
+inline Parser<std::vector<Token>> separated_by_comma(Parser<Token> const &parser) {
+	return separated(parser, token_symbol(Token::Symbol::Comma));
 }
 
 } // namespace Parser

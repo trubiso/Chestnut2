@@ -6,6 +6,8 @@
 #include "Stream.h"
 #include "Token.h"
 
+// thanks to https://github.com/Qqwy/cpp-parser_combinators
+
 namespace Parser {
 
 struct Error {
@@ -13,7 +15,9 @@ struct Error {
 	std::string message;
 };
 
-// thanks to https://github.com/Qqwy/cpp-parser_combinators
+// Remember!!! A parser returning an error will leave the stream index unmodified, whereas a parser
+// returning a result usually modifies the stream index.
+
 template <typename T, typename E = Error, typename V = Token>
 struct Parser : public std::function<Result<T, E>(Stream<V> &)> {
 	using std::function<Result<T, E>(Stream<V> &)>::function;

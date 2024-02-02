@@ -9,7 +9,7 @@ inline Parser<T, E, V> constant(T const &value) {
 }
 
 template <typename T = Token, typename E = Error, typename V = Token>
-Parser<T, E, V> satisfy(std::function<bool(V const &)> check, std::string error_message) {
+Parser<T, E, V> satisfy(std::function<bool(V const &)> const &check, std::string error_message) {
 	return [=](Stream<V> &input) -> Result<T, E> {
 		std::optional<T> value = input.peek();
 		if (!value.has_value())
