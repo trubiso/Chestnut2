@@ -30,4 +30,8 @@ template <typename V> Span make_span(Stream<V> const &input, size_t start_index,
 	            .end = end.has_value() ? end.value().span.end : input.last().span.end};
 }
 
+template <typename V> inline Span make_span(Stream<V> const &input) {
+	return make_span(input, input.index(), input.index());
+}
+
 } // namespace Parser

@@ -132,11 +132,14 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Diagnostic.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Primitive.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Span.h" />
+    <ClInclude Include="Specific.h" />
     <ClInclude Include="Stream.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="VariantName.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -148,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="VariantName.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
