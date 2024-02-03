@@ -1,6 +1,6 @@
 #pragma once
-#include <algorithm>
 #include <functional>
+#include <set>
 #include <string>
 
 #include "Result.h"
@@ -14,17 +14,16 @@ namespace Parser {
 struct Error {
 	Span span;
 
-	std::vector<std::string> expected;
+	std::set<std::string> expected;
 
-	Error(Span span, std::vector<std::string> expected) : span(span), expected(expected) {}
+	Error(Span span, std::set<std::string> expected) : span(span), expected(expected) {}
 	Error(Span span, std::string const &expected) : span(span), expected({expected}) {}
 };
 
 inline Error operator|(Error const &l, Error const &r) {
-	std::vector<std::string> expected = l.expected;
+	std::set<std::string> expected = l.expected;
 	for (auto const &expectation : r.expected)
-		if (std::find(l.expected.begin(), l.expected.end(), expectation) == l.expected.end())
-			expected.push_back(expectation);
+		expected.insert(expectation);
 	return Error(l.span, expected);
 }
 

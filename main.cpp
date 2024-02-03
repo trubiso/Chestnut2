@@ -26,12 +26,14 @@ std::string read_file(char const *path) noexcept {
 }
 
 void print_error(Parser::Error const &error, std::string const &code) {
-	std::cout << "Error: " << error.span.start << ":" << error.span.end << " -> parser error: expected ";
-	for (size_t i = 0; i < error.expected.size(); ++i) {
-		std::cout << error.expected.at(i);
-		if (error.expected.size() >= 2 && i < error.expected.size() - 2)
+	std::cout << "Error: " << error.span.start << ":" << error.span.end
+	          << " -> parser error: expected ";
+	std::vector<std::string> expected(error.expected.begin(), error.expected.end());
+	for (size_t i = 0; i < expected.size(); ++i) {
+		std::cout << expected[i];
+		if (expected.size() >= 2 && i < expected.size() - 2)
 			std::cout << ", ";
-		else if (error.expected.size() >= 1 && i < error.expected.size() - 1)
+		else if (expected.size() >= 1 && i < expected.size() - 1)
 			std::cout << " or ";
 	}
 	std::cout << "; found '" << error.span.value(code) << "'" << std::endl;
