@@ -76,4 +76,25 @@ void debug(AST::Expression const &expression) {
 	}
 }
 
+void debug(AST::Statement const &statement) {
+	using enum AST::Statement::Kind;
+	switch (statement.kind) {
+	case Create: {
+		auto const &create = std::get<AST::Statement::Create>(statement.value);
+		std::cout << "CREATE [";
+		debug(create.type);
+		std::cout << " ";
+		if (create.mutable_)
+			std::cout << "(mutable) ";
+		debug(create.identifier);
+		if (create.value.has_value()) {
+			std::cout << " = ";
+			debug(create.value.value());
+		}
+		std::cout << "]";
+		break;
+	}
+	}
+}
+
 void debug(Token::Symbol symbol) { std::cout << get_variant_name(symbol); }

@@ -1,6 +1,7 @@
+#include "Combinator.h"
 #include "Debug.h"
 #include "Lexer.h"
-#include "Expression.h"
+#include "Statement.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -35,9 +36,9 @@ int main(void) {
 
 	Stream<Token> token_stream{tokens};
 
-	auto parse_result = AST::expression()(token_stream);
+	auto parse_result = Parser::many(AST::statement())(token_stream);
 	if (bool(parse_result)) {
-		debug(std::get<AST::Expression>(parse_result));
+		debug(std::get<std::vector<AST::Statement>>(parse_result), "\n\n");
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
 		std::cout << "Error: " << error.span.start << ":" << error.span.end << " -> "

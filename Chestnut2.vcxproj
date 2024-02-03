@@ -139,6 +139,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="Span.h" />
     <ClInclude Include="Specific.h" />
+    <ClInclude Include="Statement.h" />
     <ClInclude Include="Stream.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Lexer.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="Statement.cpp" />
     <ClCompile Include="Type.cpp" />
     <ClCompile Include="VariantName.cpp" />
   </ItemGroup>

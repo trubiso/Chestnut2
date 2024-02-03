@@ -1,6 +1,7 @@
 #pragma once
 #include "Expression.h"
 #include "Identifier.h"
+#include "Statement.h"
 #include "Token.h"
 #include "Type.h"
 #include <iostream>
@@ -10,6 +11,7 @@ void debug(Token const &);
 void debug(AST::Identifier const &);
 void debug(AST::Type const &);
 void debug(AST::Expression const &);
+void debug(AST::Statement const &);
 
 void debug(Token::Symbol);
 

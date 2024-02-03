@@ -1,6 +1,5 @@
 #include "Type.h"
-#include "Combinator.h"
-#include "Primitive.h"
+#include "Specific.h"
 
 namespace AST {
 
@@ -20,9 +19,17 @@ Parser::Parser<Type> type_inferred() {
 			              return "expected discarded type";
 		              return {};
 	              }) >>
-	       constant(Type{.kind = Type::Kind::Inferred, .value = std::monostate{}});
+	       constant(Type::inferred());
 }
 
 Parser::Parser<Type> type() { return type_inferred() | type_identified(); }
+
+Parser::Parser<std::tuple<Identifier, Type>> identifier_with_type() {
+	return identifier() & (Parser::token_symbol(Token::Symbol::Colon) >> type());
+}
+
+Parser::Parser<std::tuple<Identifier, std::optional<Type>>> identifier_with_optional_type() {
+	return identifier() & optional(Parser::token_symbol(Token::Symbol::Colon) >> type());
+}
 
 } // namespace AST

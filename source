@@ -1,4 +1,9 @@
-3 + 4 * -5 - 8 + 7 + 2 - (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
+let a = 3 + 4 * -5 - 8 + 7 +
+2
+- (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
+mut b = 28
+let k: i32 = 2
+mut y: i32
 
 func main() {
 	let mut pure func method struct enum union
