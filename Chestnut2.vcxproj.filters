@@ -28,12 +28,15 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{12229194-4892-4ba9-9f38-cd8bd7fa7a3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Parser">
+      <UniqueIdentifier>{b774b4d3-d154-4425-bb18-17c0c5300b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser">
+      <UniqueIdentifier>{d7afb13c-c9c9-4859-8b4c-8b021c7f9284}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Token.h">
-      <Filter>Header Files\Lexer</Filter>
-    </ClInclude>
-    <ClInclude Include="Tokenizer.h">
       <Filter>Header Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="Combinator.h">
@@ -66,6 +69,15 @@
     <ClInclude Include="VariantName.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Lexer.h">
+      <Filter>Header Files\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="Identifier.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -75,9 +87,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tokenizer.cpp">
-      <Filter>Source Files\Lexer</Filter>
-    </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files\Common</Filter>
     </ClCompile>
@@ -86,6 +95,15 @@
     </ClCompile>
     <ClCompile Include="VariantName.cpp">
       <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="Identifier.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Type.cpp">
+      <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
