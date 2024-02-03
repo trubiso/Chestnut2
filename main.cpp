@@ -1,5 +1,5 @@
 #include "Debug.h"
-#include "Tokenizer.h"
+#include "Lexer.h"
 #include "Type.h"
 #include <fstream>
 #include <iostream>
@@ -27,7 +27,7 @@ std::string read_file(char const *path) noexcept {
 
 int main(void) {
 	std::string code = read_file("source");
-	Tokenizer tokenizer(&code);
+	Lexer tokenizer(&code);
 	std::vector<Token> tokens = tokenizer.collect_all();
 
 	debug(tokens, "\n");

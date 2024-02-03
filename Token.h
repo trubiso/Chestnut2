@@ -27,35 +27,35 @@ struct Token {
 	enum class Symbol {
 		Plus, // +
 		// TODO: PlusPlus (concat)
-		Minus, // -
-		Star, // *
-		Div, // /
-		Amp, // &
-		Bar, // |
-		Xor, // ^
-		Tilde, // ~
-		Eq, // =
-		Lt, // <
-		Gt, // >
-		Bang, // !
-		Question, // ?
+		Minus,      // -
+		Star,       // *
+		Div,        // /
+		Amp,        // &
+		Bar,        // |
+		Xor,        // ^
+		Tilde,      // ~
+		Eq,         // =
+		Lt,         // <
+		Gt,         // >
+		Bang,       // !
+		Question,   // ?
 		Percentage, // %
-		At, // @
-		LParen, // (
-		RParen, // )
-		LBracket, // [
-		RBracket, // ]
-		LBrace, // {
-		RBrace, // }
-		Dot, // .
-		Comma, // ,
-		Colon, // :
-		Semicolon, // ;
-		DotDot, // ..
-		DotDotDot, // ...
+		At,         // @
+		LParen,     // (
+		RParen,     // )
+		LBracket,   // [
+		RBracket,   // ]
+		LBrace,     // {
+		RBrace,     // }
+		Dot,        // .
+		Comma,      // ,
+		Colon,      // :
+		Semicolon,  // ;
+		DotDot,     // ..
+		DotDotDot,  // ...
 		ColonColon, // ::
-		Arrow, // ->
-		FatArrow, // =>
+		Arrow,      // ->
+		FatArrow,   // =>
 	};
 
 	Span span;

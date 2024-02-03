@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 
-class Tokenizer {
+class Lexer {
 public:
-	Tokenizer(std::string const *source) : m_source(source), m_index(0) {}
+	Lexer(std::string const *source) : m_source(source), m_index(0) {}
 
 	std::optional<std::tuple<Token, std::optional<Token>>> next();
 	std::vector<Token> collect_all();
@@ -29,7 +29,9 @@ private:
 
 	constexpr inline bool is_index_valid() const { return m_index < m_source->size(); }
 
-	constexpr static inline bool is_whitespace(char x) { return x == ' ' || x == '\t' || x == '\r'; }
+	constexpr static inline bool is_whitespace(char x) {
+		return x == ' ' || x == '\t' || x == '\r';
+	}
 	static inline bool is_id_start(char x) { return std::isalpha(x) || x == '_'; }
 	static inline bool is_id_nonstart(char x) { return std::isalnum(x) || x == '_'; }
 

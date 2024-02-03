@@ -1,9 +1,9 @@
-#include "Tokenizer.h"
+#include "Lexer.h"
 
 #include <cctype>
 #include <tuple>
 
-std::optional<std::tuple<Token, std::optional<Token>>> Tokenizer::next() {
+std::optional<std::tuple<Token, std::optional<Token>>> Lexer::next() {
 	consume_whitespace();
 	if (!current().has_value())
 		return {};
@@ -132,7 +132,7 @@ std::optional<std::tuple<Token, std::optional<Token>>> Tokenizer::next() {
 	}
 }
 
-std::vector<Token> Tokenizer::collect_all() {
+std::vector<Token> Lexer::collect_all() {
 	std::vector<Token> tokens{};
 	while (true) {
 		std::optional<std::tuple<Token, std::optional<Token>>> next_token = next();
@@ -146,19 +146,19 @@ std::vector<Token> Tokenizer::collect_all() {
 	return tokens;
 }
 
-void Tokenizer::consume_whitespace() {
+void Lexer::consume_whitespace() {
 	while (is_index_valid() && is_whitespace(current().value())) {
 		advance();
 	}
 }
 
-void Tokenizer::consume_identifier() {
+void Lexer::consume_identifier() {
 	while (is_index_valid() && is_id_nonstart(current().value())) {
 		advance();
 	}
 }
 
-void Tokenizer::consume_number_literal() {
+void Lexer::consume_number_literal() {
 	// TODO: be stricter
 	while (is_index_valid() && (std::isdigit(current().value()) || current().value() == '_'))
 		advance();
@@ -178,7 +178,7 @@ void Tokenizer::consume_number_literal() {
 		advance();
 }
 
-void Tokenizer::consume_wrapped_literal(char wrap) {
+void Lexer::consume_wrapped_literal(char wrap) {
 	advance(); // consume wrap character
 	while (is_index_valid() && current().value() != wrap)
 		advance();
@@ -247,7 +247,7 @@ Token::Symbol from_char(char c) {
 	}
 }
 
-Token::Symbol Tokenizer::consume_symbol() {
+Token::Symbol Lexer::consume_symbol() {
 	char first_char = current().value();
 	Token::Symbol symbol = from_char(first_char);
 	advance();
