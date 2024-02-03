@@ -143,6 +143,9 @@ std::vector<Token> Lexer::collect_all() {
 			tokens.push_back(semicolon.value());
 		tokens.push_back(token);
 	}
+	tokens.push_back(Token{.span = Span{m_index, m_index + 1},
+	                       .value = Token::Symbol::Semicolon,
+	                       .kind = Token::Kind::Symbol});
 	return tokens;
 }
 

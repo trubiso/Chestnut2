@@ -24,10 +24,11 @@ inline Error operator|(Error const &l, Error const &r) {
 
 // Remember!!! A parser returning an error will leave the stream index unmodified, whereas a parser
 // returning a result usually modifies the stream index.
+// The error vector passed into the Parser may be used to add errors that may otherwise be ignored.
 
 template <typename T, typename E = Error, typename V = Token>
-struct Parser : public std::function<Result<T, E>(Stream<V> &)> {
-	using std::function<Result<T, E>(Stream<V> &)>::function;
+struct Parser : public std::function<Result<T, E>(Stream<V> &, std::vector<Error> &)> {
+	using std::function<Result<T, E>(Stream<V> &, std::vector<Error> &)>::function;
 	typedef T value_type;
 	typedef E error_type;
 	typedef Stream<V> input_type;

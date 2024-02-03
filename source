@@ -5,4 +5,8 @@ func silly() void {
 	mut b = 28
 	let k: i32 = 2
 	mut y: i32
-} func main() void
+}
+
+func main() void {
+	let a a
+}

@@ -7,7 +7,7 @@ Parser::Parser<Statement> statement_create() {
 	using namespace Parser;
 	auto mutability = token_keyword(Token::Keyword::Let) >> constant(false) |
 	                  token_keyword(Token::Keyword::Mut) >> constant(true);
-	auto type_and_name = identifier_with_optional_type();
+	auto type_and_name = must(identifier_with_optional_type());
 	auto value = expression();
 	auto create_statement =
 	    (mutability & type_and_name) & optional(token_symbol(Token::Symbol::Eq) >> value);
@@ -35,9 +35,11 @@ Parser::Parser<Statement> statement_create() {
 
 Parser::Parser<Statement> statement() {
 	auto statement = statement_create();
-	return Parser::trailing_semis() >> statement << Parser::eol();
+	return statement << Parser::eol();
 }
 
-Parser::Parser<std::vector<Statement>> scope() { return Parser::braced(Parser::many(statement())); }
+Parser::Parser<std::vector<Statement>> scope() {
+	return Parser::braced(Parser::trailing_semis() >> Parser::many(statement()));
+}
 
 } // namespace AST

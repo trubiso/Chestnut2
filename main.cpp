@@ -25,6 +25,11 @@ std::string read_file(char const *path) noexcept {
 	return content;
 }
 
+void print_error(Parser::Error const &error, std::string const &code) {
+	std::cout << "Error: " << error.span.start << ":" << error.span.end << " ('"
+	          << error.span.value(code) << "') -> " << error.message << std::endl;
+}
+
 int main(void) {
 	std::string code = read_file("source");
 	Lexer tokenizer(&code);
@@ -34,14 +39,20 @@ int main(void) {
 	std::cout << "\n" << std::endl;
 
 	Stream<Token> token_stream{tokens};
+	std::vector<Parser::Error> accumulated_errors{};
 
-	auto parse_result = AST::program()(token_stream);
+	auto parse_result = AST::program()(token_stream, accumulated_errors);
 	if (bool(parse_result)) {
 		debug(std::get<AST::Program>(parse_result), "\n\n");
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
-		std::cout << "Error: " << error.span.start << ":" << error.span.end << " ('"
-		          << error.span.value(code) << "') -> " << error.message << std::endl;
+		print_error(error, code);
+	}
+
+	std::cout << "\n\n--- acc err ---\n";
+
+	for (auto const &error : accumulated_errors) {
+		print_error(error, code);
 	}
 
 	return 0;

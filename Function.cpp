@@ -20,7 +20,7 @@ Parser::Parser<Function::Signature> function_signature() {
 Parser::Parser<Function> function() {
 	using namespace Parser;
 
-	auto name = token_keyword(Token::Keyword::Func) >> identifier();
+	auto name = token_keyword(Token::Keyword::Func) >> must(identifier());
 
 	// TODO: actually use body_shorthand (we need Statement::Return for it)
 	auto body_shorthand = token_symbol(Token::Symbol::FatArrow) >> expression() << eol();
@@ -28,7 +28,7 @@ Parser::Parser<Function> function() {
 	auto body_none = eol() >> constant((decltype(Function::body))std::nullopt);
 	auto body = body_scope | body_none;
 
-	return transform(name & function_signature() & body, [](auto const &data) {
+	return transform(name & must(function_signature()) & must(body), [](auto const &data) {
 		return Function{.name = std::get<0>(std::get<0>(data)),
 		                .signature = std::get<1>(std::get<0>(data)),
 		                .body = std::get<1>(data)};
