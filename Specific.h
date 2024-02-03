@@ -26,23 +26,28 @@ inline Parser<Token> token_symbol(Token::Symbol symbol) {
 	});
 }
 
-inline Parser<Token> wrapped(Parser<Token> const &parser, Token::Symbol l, Token::Symbol r) {
+template <typename T, typename E, typename V>
+inline Parser<T, E, V> wrapped(Parser<T, E, V> const &parser, Token::Symbol l, Token::Symbol r) {
 	return token_symbol(l) >> parser << token_symbol(r);
 }
-inline Parser<Token> parenthesized(Parser<Token> const &parser) {
+template <typename T, typename E, typename V>
+inline Parser<T, E, V> parenthesized(Parser<T, E, V> const &parser) {
 	return wrapped(parser, Token::Symbol::LParen, Token::Symbol::RParen);
 }
-inline Parser<Token> bracketed(Parser<Token> const &parser) {
+template <typename T, typename E, typename V>
+inline Parser<T, E, V> bracketed(Parser<T, E, V> const &parser) {
 	return wrapped(parser, Token::Symbol::LBracket, Token::Symbol::RBracket);
 }
-inline Parser<Token> braced(Parser<Token> const &parser) {
+template <typename T, typename E, typename V>
+inline Parser<T, E, V> braced(Parser<T, E, V> const &parser) {
 	return wrapped(parser, Token::Symbol::LBrace, Token::Symbol::RBrace);
 }
-inline Parser<Token> angled(Parser<Token> const &parser) {
+template <typename T, typename E, typename V>
+inline Parser<T, E, V> angled(Parser<T, E, V> const &parser) {
 	return wrapped(parser, Token::Symbol::Lt, Token::Symbol::Gt);
 }
-
-inline Parser<std::vector<Token>> separated_by_comma(Parser<Token> const &parser) {
+template <typename T, typename E, typename V>
+inline Parser<std::vector<T>, E, V> separated_by_comma(Parser<T, E, V> const &parser) {
 	return separated(parser, token_symbol(Token::Symbol::Comma));
 }
 

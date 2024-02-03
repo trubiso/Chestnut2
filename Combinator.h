@@ -5,9 +5,9 @@
 namespace Parser {
 
 #define lazy(parser)                                                                               \
-	Parser<typename std::decay_t<decltype(parser)>::value_type,                                    \
-	       typename std::decay_t<decltype(parser)>::error_type,                                    \
-	       typename std::decay_t<decltype(parser)>::input_type> {                                  \
+	::Parser::Parser<typename std::decay_t<decltype(parser)>::value_type,                          \
+	                 typename std::decay_t<decltype(parser)>::error_type,                          \
+	                 typename std::decay_t<decltype(parser)>::inner_input_type> {                  \
 		[=](auto &input) { return (parser)(input); }                                               \
 	}
 

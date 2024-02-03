@@ -12,7 +12,7 @@ char const *get_variant_name(Token::Kind kind) {
 	case CharLiteral:
 		return "char literal";
 	case Symbol:
-		return "operator/punctuation";
+		return "symbol";
 	}
 }
 

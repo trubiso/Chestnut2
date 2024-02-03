@@ -78,6 +78,12 @@
     <ClInclude Include="Type.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="Expression.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -103,6 +109,9 @@
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Type.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Expression.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,4 +1,4 @@
-_
+3 + 4 * -5 - 8 + 7 + 2 - (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
 
 func main() {
 	let mut pure func method struct enum union

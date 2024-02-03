@@ -1,4 +1,5 @@
 #pragma once
+#include "Expression.h"
 #include "Identifier.h"
 #include "Token.h"
 #include "Type.h"
@@ -8,6 +9,9 @@
 void debug(Token const &);
 void debug(AST::Identifier const &);
 void debug(AST::Type const &);
+void debug(AST::Expression const &);
+
+void debug(Token::Symbol);
 
 inline void debug(std::string const &string) { std::cout << string; }
 

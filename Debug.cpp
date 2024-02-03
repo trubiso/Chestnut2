@@ -39,3 +39,41 @@ void debug(AST::Type const &type) {
 	}
 	std::cout << "]";
 }
+
+void debug(AST::Expression const &expression) {
+	using enum AST::Expression::Kind;
+	switch (expression.kind) {
+	case CharLiteral:
+		std::cout << "char " << std::get<std::string>(expression.value);
+		break;
+	case StringLiteral:
+		std::cout << "string " << std::get<std::string>(expression.value);
+		break;
+	case NumberLiteral:
+		std::cout << "number " << std::get<std::string>(expression.value);
+		break;
+	case Identifier:
+		debug(std::get<AST::Identifier>(expression.value));
+		break;
+	case BinaryOperation: {
+		auto const &operation = std::get<AST::Expression::BinaryOperation>(expression.value);
+		std::cout << "(";
+		debug(*operation.lhs);
+		std::cout << " binaryop";
+		debug(operation.operator_);
+		std::cout << " ";
+		debug(*operation.rhs);
+		std::cout << ")";
+	} break;
+	case UnaryOperation: {
+		auto const &operation = std::get<AST::Expression::UnaryOperation>(expression.value);
+		std::cout << "(unaryop";
+		debug(operation.operator_);
+		std::cout << " ";
+		debug(*operation.value);
+		std::cout << ")";
+	} break;
+	}
+}
+
+void debug(Token::Symbol symbol) { std::cout << get_variant_name(symbol); }
