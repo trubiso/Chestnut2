@@ -1,11 +1,13 @@
 #pragma once
 #include "Identifier.h"
 #include "Token.h"
+#include "Type.h"
 #include <iostream>
 #include <vector>
 
-void debug(Token const &token);
-void debug(AST::Identifier const &identifier);
+void debug(Token const &);
+void debug(AST::Identifier const &);
+void debug(AST::Type const &);
 
 inline void debug(std::string const &string) { std::cout << string; }
 

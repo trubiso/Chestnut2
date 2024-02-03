@@ -140,6 +140,7 @@
     <ClInclude Include="Stream.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="Type.h" />
     <ClInclude Include="VariantName.h" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="Type.cpp" />
     <ClCompile Include="VariantName.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

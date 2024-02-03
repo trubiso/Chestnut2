@@ -25,3 +25,17 @@ void debug(AST::Identifier const &identifier) {
 	}
 	}
 }
+
+void debug(AST::Type const &type) {
+	using enum AST::Type::Kind;
+	std::cout << "[type ";
+	switch (type.kind) {
+	case Identified:
+		debug(std::get<AST::Identifier>(type.value));
+		break;
+	case Inferred:
+		std::cout << "inferred";
+		break;
+	}
+	std::cout << "]";
+}

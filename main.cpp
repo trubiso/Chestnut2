@@ -1,6 +1,6 @@
 #include "Debug.h"
 #include "Tokenizer.h"
-#include "Identifier.h"
+#include "Type.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -35,11 +35,13 @@ int main(void) {
 
 	Stream<Token> token_stream{tokens};
 
-	auto parse_result = AST::identifier()(token_stream);
+	auto parse_result = AST::type()(token_stream);
 	if (bool(parse_result)) {
-		debug(std::get<AST::Identifier>(parse_result));
+		debug(std::get<AST::Type>(parse_result));
 	} else {
-		std::cout << "Error" << std::endl;
+		auto error = std::get<Parser::Error>(parse_result);
+		std::cout << "Error: " << error.span.start << ":" << error.span.end << " -> "
+		          << error.message << std::endl;
 	}
 
 	return 0;
