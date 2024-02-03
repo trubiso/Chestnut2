@@ -20,9 +20,9 @@ struct Statement {
 	std::variant<Create> value;
 };
 
-Parser::Parser<Statement> statement_create();
+Parser::Parser<Statement> statement_create(bool semicolon);
 
-Parser::Parser<Statement> statement();
+Parser::Parser<Statement> statement(bool semicolon = true);
 
 typedef std::vector<Statement> Scope;
 

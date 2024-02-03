@@ -3,14 +3,15 @@
 
 namespace AST {
 
-Parser::Parser<Statement> statement_create() {
+Parser::Parser<Statement> statement_create(bool semicolon) {
 	using namespace Parser;
 	auto mutability = token_keyword(Token::Keyword::Let) >> constant(false) |
 	                  token_keyword(Token::Keyword::Mut) >> constant(true);
 	auto type_and_name = must(identifier_with_optional_type());
 	auto value = expression();
-	auto create_statement =
-	    (mutability & type_and_name) & optional(token_symbol(Token::Symbol::Eq) >> value);
+	auto create_statement = (mutability & type_and_name) &
+	                        must(as_optional(token_symbol(Token::Symbol::Eq) >> value << eol(semicolon)) |
+	                             eol(semicolon) >> constant((std::optional<Expression>)std::nullopt));
 
 	return transform(create_statement,
 	                 [](std::tuple<std::tuple<bool, std::tuple<Identifier, std::optional<Type>>>,
@@ -33,9 +34,9 @@ Parser::Parser<Statement> statement_create() {
 	                 });
 }
 
-Parser::Parser<Statement> statement() {
-	auto statement = statement_create();
-	return statement << Parser::eol();
+Parser::Parser<Statement> statement(bool semicolon) {
+	auto statement = statement_create(semicolon);
+	return statement;
 }
 
 Parser::Parser<std::vector<Statement>> scope() {

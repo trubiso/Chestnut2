@@ -13,17 +13,20 @@ inline Parser<Token> token_kind(Token::Kind kind) {
 inline Parser<Token> token_identifier() { return token_kind(Token::Kind::Identifier); }
 inline Parser<Token> token_keyword(Token::Keyword keyword) {
 	std::string kw = get_variant_name(keyword);
-	return filter(token_identifier(), [=](Token const &token) {
-		return std::get<std::string>(token.value) == kw ? std::optional<std::string>(std::nullopt)
-		                                                : ("expected keyword " + kw);
-	});
+	return satisfy(
+	    [=](Token const &token) {
+		    return token.kind == Token::Kind::Identifier &&
+		           std::get<std::string>(token.value) == kw;
+	    },
+	    "expected keyword " + kw);
 }
 inline Parser<Token> token_symbol(Token::Symbol symbol) {
-	return filter(token_kind(Token::Kind::Symbol), [=](Token const &token) {
-		return std::get<Token::Symbol>(token.value) == symbol
-		           ? std::optional<std::string>(std::nullopt)
-		           : ("expected symbol " + (std::string)get_variant_name(symbol));
-	});
+	return satisfy(
+	    [=](Token const &token) {
+		    return token.kind == Token::Kind::Symbol &&
+		           std::get<Token::Symbol>(token.value) == symbol;
+	    },
+	    "expected symbol " + (std::string)get_variant_name(symbol));
 }
 
 template <typename T, typename E, typename V>
@@ -60,9 +63,9 @@ inline Parser<std::vector<Token>> trailing_semis() {
 	return many(token_symbol(Token::Symbol::Semicolon));
 }
 
-inline Parser<std::vector<Token>> eol() {
-	return at_least(token_symbol(Token::Symbol::Semicolon), 1,
-	                "couldn't find semicolon/end of line");
+inline Parser<std::vector<Token>> eol(bool semicolon = true) {
+	return at_least(token_symbol(Token::Symbol::Semicolon), semicolon ? 1 : 0,
+	                "expected semicolon or newline");
 }
 
 } // namespace Parser
