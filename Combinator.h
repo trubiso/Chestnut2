@@ -84,7 +84,7 @@ separated_no_trailing_at_least(Parser<Ta, Ea, V> const &parser, Parser<Tb, Eb, V
 template <typename Ta, typename Ea, typename Tb, typename Eb, typename V>
 Parser<std::vector<Ta>, Ea, V> separated_no_trailing(Parser<Ta, Ea, V> const &parser,
                                                      Parser<Tb, Eb, V> const &separator) {
-	return separated_no_trailing_at_least(parser, separator, 0, "");
+	return separated_no_trailing_at_least(parser, separator, 0, "this error shouldn't occur");
 }
 
 template <typename Ta, typename Ea, typename Tb, typename Eb, typename V>

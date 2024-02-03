@@ -30,6 +30,8 @@ private:
 	constexpr inline bool is_index_valid() const { return m_index < m_source->size(); }
 
 	constexpr static inline bool is_whitespace(char x) { return x == ' ' || x == '\t' || x == '\r'; }
+	static inline bool is_id_start(char x) { return std::isalpha(x) || x == '_'; }
+	static inline bool is_id_nonstart(char x) { return std::isalnum(x) || x == '_'; }
 
 	void consume_whitespace();
 	void consume_identifier();

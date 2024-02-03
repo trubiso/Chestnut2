@@ -22,7 +22,7 @@ std::optional<std::tuple<Token, std::optional<Token>>> Tokenizer::next() {
 	Token::Kind kind;
 	Token::Symbol symbol;
 
-	if (std::isalpha(current_value)) {
+	if (is_id_start(current_value)) {
 		kind = Token::Kind::Identifier;
 		consume_identifier();
 	} else if (std::isdigit(current_value)) {
@@ -153,7 +153,7 @@ void Tokenizer::consume_whitespace() {
 }
 
 void Tokenizer::consume_identifier() {
-	while (is_index_valid() && std::isalnum(current().value())) {
+	while (is_index_valid() && is_id_nonstart(current().value())) {
 		advance();
 	}
 }

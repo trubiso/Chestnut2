@@ -18,6 +18,7 @@ Parser::Parser<Type> type_inferred() {
 		              if (identifier.kind != Identifier::Kind::Unqualified ||
 		                  std::get<std::string>(identifier.value) != "_")
 			              return "expected discarded type";
+		              return {};
 	              }) >>
 	       constant(Type{.kind = Type::Kind::Inferred, .value = std::monostate{}});
 }
