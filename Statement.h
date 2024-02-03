@@ -24,6 +24,8 @@ Parser::Parser<Statement> statement_create();
 
 Parser::Parser<Statement> statement();
 
-Parser::Parser<std::vector<Statement>> scope();
+typedef std::vector<Statement> Scope;
+
+Parser::Parser<Scope> scope();
 
 } // namespace AST

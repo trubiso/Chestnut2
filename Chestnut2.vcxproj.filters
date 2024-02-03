@@ -90,6 +90,9 @@
     <ClInclude Include="Function.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Function.cpp">
       <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

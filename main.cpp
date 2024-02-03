@@ -1,7 +1,6 @@
 #include "Debug.h"
-#include "Function.h"
 #include "Lexer.h"
-#include "Specific.h"
+#include "Program.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -36,9 +35,9 @@ int main(void) {
 
 	Stream<Token> token_stream{tokens};
 
-	auto parse_result = AST::function()(token_stream);
+	auto parse_result = AST::program()(token_stream);
 	if (bool(parse_result)) {
-		debug(std::get<AST::Function>(parse_result));
+		debug(std::get<AST::Program>(parse_result), "\n\n");
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
 		std::cout << "Error: " << error.span.start << ":" << error.span.end << " ('"

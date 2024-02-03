@@ -137,6 +137,7 @@
     <ClInclude Include="Identifier.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Program.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Span.h" />
     <ClInclude Include="Specific.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="Type.cpp" />
     <ClCompile Include="VariantName.cpp" />

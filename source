@@ -5,18 +5,4 @@ func silly() void {
 	mut b = 28
 	let k: i32 = 2
 	mut y: i32
-}
-
-func main() void {
-	let mut pure func method struct enum union
-	+ - * / & | ^ ~ = < > ! ? % @ ( ) [ ] { } . .. ... , : :: ; -> => {
-		let a = 3.14
-		let b = 9.28
-		let c = "hey"
-		let d = 'u'
-		let k = e
-		      + c + d + f
-			  - r - t - v
-		let d = k + 1
-	}
-}
+} func main() void

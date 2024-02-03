@@ -13,7 +13,7 @@ struct Function {
 		std::vector<std::tuple<Identifier, Type>> arguments;
 		Type return_type;
 	} signature;
-	std::optional<std::vector<Statement>> body;
+	std::optional<Scope> body;
 };
 
 Parser::Parser<Function::Signature> function_signature();
