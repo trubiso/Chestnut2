@@ -149,7 +149,6 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Diagnostic.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="VariantName.cpp" />
   </ItemGroup>

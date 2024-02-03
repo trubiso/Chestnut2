@@ -11,8 +11,20 @@ inline Parser<Token> token_kind(Token::Kind kind) {
 	               "expected token of kind " + std::string(get_variant_name(kind)));
 }
 inline Parser<Token> token_identifier() { return token_kind(Token::Kind::Identifier); }
-Parser<Token> token_keyword(Token::Keyword keyword);
-Parser<Token> token_symbol(Token::Symbol symbol);
+inline Parser<Token> token_keyword(Token::Keyword keyword) {
+	std::string kw = get_variant_name(keyword);
+	return filter(token_identifier(), [=](Token const &token) {
+		return std::get<std::string>(token.value) == kw ? std::optional<std::string>(std::nullopt)
+		                                                : ("expected keyword " + kw);
+	});
+}
+inline Parser<Token> token_symbol(Token::Symbol symbol) {
+	return filter(token_kind(Token::Kind::Symbol), [=](Token const &token) {
+		return std::get<Token::Symbol>(token.value) == symbol
+		           ? std::optional<std::string>(std::nullopt)
+		           : ("expected symbol " + (std::string)get_variant_name(symbol));
+	});
+}
 
 inline Parser<Token> wrapped(Parser<Token> const &parser, Token::Symbol l, Token::Symbol r) {
 	return token_symbol(l) >> parser << token_symbol(r);

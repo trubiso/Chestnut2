@@ -13,43 +13,58 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Lexer">
+      <UniqueIdentifier>{3415785d-075f-4599-be07-2e529c6fe6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lexer">
+      <UniqueIdentifier>{0f4317d9-b5f7-4c6d-8d8c-400477c6c918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ParserCore">
+      <UniqueIdentifier>{519359b9-151f-4c0e-868f-2845f52a678b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{16c18f4c-d5c1-4dab-9e14-65914abd2b60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{12229194-4892-4ba9-9f38-cd8bd7fa7a3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Token.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Span.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="Tokenizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Diagnostic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Result.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Stream.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="Combinator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VariantName.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ParserCore</Filter>
     </ClInclude>
     <ClInclude Include="Specific.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ParserCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files\ParserCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>Header Files\ParserCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Diagnostic.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Span.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Stream.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="VariantName.h">
+      <Filter>Header Files\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,23 +72,20 @@
     <None Include="source" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Tokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Diagnostic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Tokenizer.cpp">
+      <Filter>Source Files\Lexer</Filter>
     </ClCompile>
-    <ClCompile Include="Parser.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagnostic.cpp">
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
     <ClCompile Include="VariantName.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
