@@ -1,11 +1,13 @@
-let a = 3 + 4 * -5 - 8 + 7 +
-2
-- (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
-mut b = 28
-let k: i32 = 2
-mut y: i32
+func silly() void {
+	let a = 3 + 4 * -5 - 8 + 7 +
+	2
+	- (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
+	mut b = 28
+	let k: i32 = 2
+	mut y: i32
+}
 
-func main() {
+func main() void {
 	let mut pure func method struct enum union
 	+ - * / & | ^ ~ = < > ! ? % @ ( ) [ ] { } . .. ... , : :: ; -> => {
 		let a = 3.14

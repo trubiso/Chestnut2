@@ -35,8 +35,9 @@ Parser::Parser<Statement> statement_create() {
 
 Parser::Parser<Statement> statement() {
 	auto statement = statement_create();
-	return statement << Parser::at_least(Parser::token_symbol(Token::Symbol::Semicolon), 1,
-	                                     "couldn't find semicolon/end of line");
+	return Parser::trailing_semis() >> statement << Parser::eol();
 }
+
+Parser::Parser<std::vector<Statement>> scope() { return Parser::braced(Parser::many(statement())); }
 
 } // namespace AST

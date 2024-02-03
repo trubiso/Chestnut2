@@ -47,8 +47,22 @@ inline Parser<T, E, V> angled(Parser<T, E, V> const &parser) {
 	return wrapped(parser, Token::Symbol::Lt, Token::Symbol::Gt);
 }
 template <typename T, typename E, typename V>
-inline Parser<std::vector<T>, E, V> separated_by_comma(Parser<T, E, V> const &parser) {
-	return separated(parser, token_symbol(Token::Symbol::Comma));
+inline Parser<std::vector<T>, E, V> separated_by_comma(Parser<T, E, V> const &parser,
+                                                       bool can_be_empty = true) {
+	auto actual_parser = separated(parser, token_symbol(Token::Symbol::Comma));
+	if (can_be_empty)
+		return actual_parser | constant(std::vector<T>{});
+	else
+		return actual_parser;
+}
+
+inline Parser<std::vector<Token>> trailing_semis() {
+	return many(token_symbol(Token::Symbol::Semicolon));
+}
+
+inline Parser<std::vector<Token>> eol() {
+	return at_least(token_symbol(Token::Symbol::Semicolon), 1,
+	                "couldn't find semicolon/end of line");
 }
 
 } // namespace Parser

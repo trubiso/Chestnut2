@@ -40,6 +40,12 @@ void debug(AST::Type const &type) {
 	std::cout << "]";
 }
 
+void debug(std::tuple<AST::Identifier, AST::Type> const &pair) {
+	debug(std::get<0>(pair));
+	std::cout << ": ";
+	debug(std::get<1>(pair));
+}
+
 void debug(AST::Expression const &expression) {
 	using enum AST::Expression::Kind;
 	switch (expression.kind) {
@@ -94,6 +100,33 @@ void debug(AST::Statement const &statement) {
 		std::cout << "]";
 		break;
 	}
+	}
+}
+
+void debug(AST::Function::Signature const &signature) {
+	if (signature.generics.has_value()) {
+		std::cout << "<";
+		debug(signature.generics.value());
+		std::cout << ">";
+	}
+	std::cout << "(";
+	debug(signature.arguments);
+	std::cout << ") -> ";
+	debug(signature.return_type);
+}
+
+void debug(AST::Function const &function) {
+	std::cout << "function ";
+	debug(function.name);
+	std::cout << " of signature ";
+	debug(function.signature);
+	std::cout << " with body ";
+	if (!function.body.has_value()) {
+		std::cout << "omitted\n";
+	} else {
+		std::cout << "{\n";
+		debug(function.body.value(), "\n");
+		std::cout << "\n}\n";
 	}
 }
 

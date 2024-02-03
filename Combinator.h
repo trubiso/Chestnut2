@@ -160,4 +160,14 @@ Parser<std::tuple<Ta, Tb>, or_t<Ea, Eb>, V> operator&(Parser<Ta, Ea, V> const &a
 
 // TODO: spanned
 
+template <typename T, typename E, typename V>
+Parser<std::optional<T>, E, V> as_optional(Parser<T, E, V> const &parser) {
+	return transform(parser, [](auto x) -> std::optional<decltype(x)> { return x; });
+}
+
+template <typename T, typename E, typename V>
+Parser<std::optional<T>, E, V> optional(Parser<T, E, V> const &parser) {
+	return as_optional(parser) | constant<std::optional<T>, E, V>(std::nullopt);
+}
+
 } // namespace Parser

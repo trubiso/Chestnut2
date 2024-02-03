@@ -87,6 +87,9 @@
     <ClInclude Include="Statement.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -118,6 +121,9 @@
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
     <ClCompile Include="Statement.cpp">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
   </ItemGroup>

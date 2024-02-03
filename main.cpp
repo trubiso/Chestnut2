@@ -1,7 +1,7 @@
-#include "Combinator.h"
 #include "Debug.h"
+#include "Function.h"
 #include "Lexer.h"
-#include "Statement.h"
+#include "Specific.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -32,17 +32,17 @@ int main(void) {
 	std::vector<Token> tokens = tokenizer.collect_all();
 
 	debug(tokens, "\n");
-	std::cout << std::endl;
+	std::cout << "\n" << std::endl;
 
 	Stream<Token> token_stream{tokens};
 
-	auto parse_result = Parser::many(AST::statement())(token_stream);
+	auto parse_result = AST::function()(token_stream);
 	if (bool(parse_result)) {
-		debug(std::get<std::vector<AST::Statement>>(parse_result), "\n\n");
+		debug(std::get<AST::Function>(parse_result));
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
-		std::cout << "Error: " << error.span.start << ":" << error.span.end << " -> "
-		          << error.message << std::endl;
+		std::cout << "Error: " << error.span.start << ":" << error.span.end << " ('"
+		          << error.span.value(code) << "') -> " << error.message << std::endl;
 	}
 
 	return 0;
