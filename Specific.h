@@ -8,7 +8,7 @@ namespace Parser {
 
 inline Parser<Token> token_kind(Token::Kind kind) {
 	return satisfy([=](Token const &token) { return token.kind == kind; },
-	               "expected token of kind " + std::string(get_variant_name(kind)));
+	               std::string(get_variant_name(kind)));
 }
 inline Parser<Token> token_identifier() { return token_kind(Token::Kind::Identifier); }
 inline Parser<Token> token_keyword(Token::Keyword keyword) {
@@ -18,7 +18,7 @@ inline Parser<Token> token_keyword(Token::Keyword keyword) {
 		    return token.kind == Token::Kind::Identifier &&
 		           std::get<std::string>(token.value) == kw;
 	    },
-	    "expected keyword " + kw);
+	    "keyword " + kw);
 }
 inline Parser<Token> token_symbol(Token::Symbol symbol) {
 	return satisfy(
@@ -26,7 +26,7 @@ inline Parser<Token> token_symbol(Token::Symbol symbol) {
 		    return token.kind == Token::Kind::Symbol &&
 		           std::get<Token::Symbol>(token.value) == symbol;
 	    },
-	    "expected symbol " + (std::string)get_variant_name(symbol));
+	    "symbol " + (std::string)get_variant_name(symbol));
 }
 
 template <typename T, typename E, typename V>
@@ -64,8 +64,7 @@ inline Parser<std::vector<Token>> trailing_semis() {
 }
 
 inline Parser<std::vector<Token>> eol(bool semicolon = true) {
-	return at_least(token_symbol(Token::Symbol::Semicolon), semicolon ? 1 : 0,
-	                "expected semicolon or newline");
+	return at_least(token_symbol(Token::Symbol::Semicolon), semicolon ? 1 : 0, "newline/semicolon");
 }
 
 } // namespace Parser

@@ -26,8 +26,15 @@ std::string read_file(char const *path) noexcept {
 }
 
 void print_error(Parser::Error const &error, std::string const &code) {
-	std::cout << "Error: " << error.span.start << ":" << error.span.end << " ('"
-	          << error.span.value(code) << "') -> " << error.message << std::endl;
+	std::cout << "Error: " << error.span.start << ":" << error.span.end << " -> parser error: expected ";
+	for (size_t i = 0; i < error.expected.size(); ++i) {
+		std::cout << error.expected.at(i);
+		if (error.expected.size() >= 2 && i < error.expected.size() - 2)
+			std::cout << ", ";
+		else if (error.expected.size() >= 1 && i < error.expected.size() - 1)
+			std::cout << " or ";
+	}
+	std::cout << "; found '" << error.span.value(code) << "'" << std::endl;
 }
 
 int main(void) {
@@ -46,13 +53,14 @@ int main(void) {
 		debug(std::get<AST::Program>(parse_result), "\n\n");
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
-		print_error(error, code);
+		accumulated_errors.push_back(error);
 	}
 
-	std::cout << "\n\n--- acc err ---\n";
-
-	for (auto const &error : accumulated_errors) {
-		print_error(error, code);
+	if (accumulated_errors.size() > 0) {
+		std::cout << "\n\n--- Errors ---\n";
+		for (auto const &error : accumulated_errors) {
+			print_error(error, code);
+		}
 	}
 
 	return 0;

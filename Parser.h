@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <functional>
 #include <string>
 
@@ -12,14 +13,19 @@ namespace Parser {
 
 struct Error {
 	Span span;
-	std::string message;
 
-	Error(Span span, std::string const &message) : span(span), message(message) {}
+	std::vector<std::string> expected;
+
+	Error(Span span, std::vector<std::string> expected) : span(span), expected(expected) {}
+	Error(Span span, std::string const &expected) : span(span), expected({expected}) {}
 };
 
-// TODO: make this more rigorous (add "expected" and remove if already present)
 inline Error operator|(Error const &l, Error const &r) {
-	return Error(l.span, l.message + ", " + r.message);
+	std::vector<std::string> expected = l.expected;
+	for (auto const &expectation : r.expected)
+		if (std::find(l.expected.begin(), l.expected.end(), expectation) == l.expected.end())
+			expected.push_back(expectation);
+	return Error(l.span, expected);
 }
 
 // Remember!!! A parser returning an error will leave the stream index unmodified, whereas a parser
