@@ -131,6 +131,7 @@
     <ClInclude Include="Combinator.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Diagnostic.h" />
+    <ClInclude Include="Identifier.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Result.h" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Diagnostic.cpp" />
+    <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="VariantName.cpp" />

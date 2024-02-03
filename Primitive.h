@@ -1,5 +1,6 @@
 #pragma once
 #include "Parser.h"
+#include <type_traits>
 
 namespace Parser {
 
@@ -8,17 +9,18 @@ inline Parser<T, E, V> constant(T const &value) {
 	return [=](Stream<V> &) { return value; };
 }
 
-template <typename T = Token, typename E = Error, typename V = Token>
-Parser<T, E, V> satisfy(std::function<bool(V const &)> const &check, std::string error_message) {
+// F should return bool
+template <typename T = Token, typename E = Error, typename V = Token, typename F>
+Parser<T, E, V> satisfy(F const &check, std::string error_message) {
 	return [=](Stream<V> &input) -> Result<T, E> {
 		std::optional<T> value = input.peek();
 		if (!value.has_value())
-			return Error{.span = make_span(input), .message = "unexpected EOF"};
+			return Error(make_span(input), "unexpected EOF");
 		if (check(value.value())) {
 			input.ignore();
 			return value.value();
 		} else {
-			return Error{.span = make_span(input), .message = error_message};
+			return Error(make_span(input), error_message);
 		}
 	};
 }

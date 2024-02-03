@@ -1,5 +1,6 @@
 #include "Debug.h"
 #include "Tokenizer.h"
+#include "Identifier.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -30,6 +31,16 @@ int main(void) {
 	std::vector<Token> tokens = tokenizer.collect_all();
 
 	debug(tokens, "\n");
+	std::cout << std::endl;
+
+	Stream<Token> token_stream{tokens};
+
+	auto parse_result = AST::identifier()(token_stream);
+	if (bool(parse_result)) {
+		debug(std::get<AST::Identifier>(parse_result));
+	} else {
+		std::cout << "Error" << std::endl;
+	}
 
 	return 0;
 }

@@ -9,3 +9,19 @@ void debug(Token const &token) {
 		std::cout << std::get<std::string>(token.value);
 	std::cout << ']';
 }
+
+void debug(AST::Identifier const &identifier) {
+	using enum AST::Identifier::Kind;
+	switch (identifier.kind) {
+	case Unqualified:
+		std::cout << std::get<std::string>(identifier.value);
+		break;
+	case Qualified: {
+		auto const &path = std::get<AST::Identifier::QualifiedPath>(identifier.value);
+		if (path.absolute)
+			std::cout << "::";
+		debug(path.path, "::");
+		break;
+	}
+	}
+}

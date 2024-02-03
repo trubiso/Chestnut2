@@ -13,7 +13,14 @@ namespace Parser {
 struct Error {
 	Span span;
 	std::string message;
+
+	Error(Span span, std::string const &message) : span(span), message(message) {}
 };
+
+// TODO: make this more rigorous (add "expected" and remove if already present)
+inline Error operator|(Error const &l, Error const &r) {
+	return Error(l.span, l.message + ", " + r.message);
+}
 
 // Remember!!! A parser returning an error will leave the stream index unmodified, whereas a parser
 // returning a result usually modifies the stream index.
@@ -30,8 +37,8 @@ struct Parser : public std::function<Result<T, E>(Stream<V> &)> {
 template <typename V> Span make_span(Stream<V> const &input, size_t start_index, size_t end_index) {
 	std::optional<V> start = input.at(start_index);
 	std::optional<V> end = input.at(end_index);
-	return Span{.start = start.has_value() ? start.value().span.start : input.last().span.start,
-	            .end = end.has_value() ? end.value().span.end : input.last().span.end};
+	return Span(start.has_value() ? start.value().span.start : input.last().span.start,
+	            end.has_value() ? end.value().span.end : input.last().span.end);
 }
 
 template <typename V> inline Span make_span(Stream<V> const &input) {
