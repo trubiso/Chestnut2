@@ -116,7 +116,7 @@ void print_labels(std::vector<Diagnostic::Label> const &labels, std::string cons
 	std::cout << "\n\n";
 }
 
-void Diagnostic::print(std::string const &code) {
+void Diagnostic::print(std::string const &code) const {
 	// TODO: maybe use bold/italics
 
 	// 1. Print severity

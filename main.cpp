@@ -25,7 +25,7 @@ std::string read_file(char const *path) noexcept {
 	return content;
 }
 
-void print_error(Parser::Error const &error, std::string const &code) {
+Diagnostic error_cast(Parser::Error const &error, std::string const &code) {
 	std::string error_title = "expected ";
 	std::vector<std::string> expected(error.expected.begin(), error.expected.end());
 	for (size_t i = 0; i < expected.size(); ++i) {
@@ -35,16 +35,20 @@ void print_error(Parser::Error const &error, std::string const &code) {
 		else if (expected.size() >= 1 && i < expected.size() - 1)
 			error_title += " or ";
 	}
-	error_title += "; found '" + error.span.value(code) + "'";
-	Diagnostic diag(Diagnostic::Severity::Error, error_title, "couldn't parse source");
-	diag.add_label(error.span, "betwixt");
-	diag.print(code);
+	Diagnostic diag(Diagnostic::Severity::Error, error_title, "program couldn't be parsed");
+	diag.add_label(error.span);
+	return diag;
 }
 
 int main(void) {
 	std::string code = read_file("source");
 	Lexer tokenizer(&code);
+	std::vector<Diagnostic> diagnostics{};
 	std::vector<Token> tokens = tokenizer.collect_all();
+
+	for (auto const &diagnostic : tokenizer.diagnostics()) {
+		diagnostics.push_back(diagnostic);
+	}
 
 	debug(tokens, "\n");
 	std::cout << "\n" << std::endl;
@@ -61,10 +65,13 @@ int main(void) {
 	}
 
 	if (accumulated_errors.size() > 0) {
-		std::cout << "\n\n--- Errors ---\n";
 		for (auto const &error : accumulated_errors) {
-			print_error(error, code);
+			diagnostics.push_back(error_cast(error, code));
 		}
+	}
+
+	for (auto const &diagnostic : diagnostics) {
+		diagnostic.print(code);
 	}
 
 	return 0;

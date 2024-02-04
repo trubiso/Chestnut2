@@ -8,5 +8,6 @@ func silly() void {
 }
 
 func main() void {
+	`
 	let mut = pure union {}
 }

@@ -38,7 +38,7 @@ private:
 	void consume_whitespace();
 	void consume_identifier();
 	void consume_number_literal();
-	void consume_wrapped_literal(char wrap);
+	void consume_wrapped_literal(char wrap, std::string name);
 	Token::Symbol consume_symbol();
 
 	std::string const *m_source;

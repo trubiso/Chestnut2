@@ -32,11 +32,11 @@ std::optional<std::tuple<Token, std::optional<Token>>> Lexer::next() {
 		switch (current_value) {
 		case '"':
 			kind = Token::Kind::StringLiteral;
-			consume_wrapped_literal('"');
+			consume_wrapped_literal('"', "string literal");
 			break;
 		case '\'':
 			kind = Token::Kind::CharLiteral;
-			consume_wrapped_literal('\'');
+			consume_wrapped_literal('\'', "char literal");
 			break;
 		case '+':
 		case '-':
@@ -68,7 +68,11 @@ std::optional<std::tuple<Token, std::optional<Token>>> Lexer::next() {
 			break;
 		}
 		default:
-			// unknown char, how did we get here?
+			m_diagnostics.push_back(
+			    Diagnostic(Diagnostic::Severity::Error, "unknown character",
+			               (std::string) "the character '" + current_value +
+			                   (std::string) "' isn't supported by the lexer")
+			        .add_label(Span(m_index, m_index + 1)));
 			return {};
 		}
 
@@ -181,12 +185,17 @@ void Lexer::consume_number_literal() {
 		advance();
 }
 
-void Lexer::consume_wrapped_literal(char wrap) {
+void Lexer::consume_wrapped_literal(char wrap, std::string name) {
+	size_t span_begin = m_index;
 	advance(); // consume wrap character
 	while (is_index_valid() && current().value() != wrap)
 		advance();
 	if (!is_index_valid()) {
-		// unclosed wrapped literal diagnostic!
+		m_diagnostics.push_back(
+		    Diagnostic(Diagnostic::Severity::Error, "unclosed " + name,
+		               "a " + name +
+		                   (std::string) " was opened, but the closing quote couldn't be found")
+		        .add_label(Span(span_begin, m_source->size())));
 		return;
 	}
 	advance(); // consume wrap character
