@@ -26,17 +26,19 @@ std::string read_file(char const *path) noexcept {
 }
 
 void print_error(Parser::Error const &error, std::string const &code) {
-	std::cout << "Error: " << error.span.start << ":" << error.span.end
-	          << " -> parser error: expected ";
+	std::string error_title = "expected ";
 	std::vector<std::string> expected(error.expected.begin(), error.expected.end());
 	for (size_t i = 0; i < expected.size(); ++i) {
-		std::cout << expected[i];
+		error_title += expected[i];
 		if (expected.size() >= 2 && i < expected.size() - 2)
-			std::cout << ", ";
+			error_title += ", ";
 		else if (expected.size() >= 1 && i < expected.size() - 1)
-			std::cout << " or ";
+			error_title += " or ";
 	}
-	std::cout << "; found '" << error.span.value(code) << "'" << std::endl;
+	error_title += "; found '" + error.span.value(code) + "'";
+	Diagnostic diag(Diagnostic::Severity::Error, error_title, "couldn't parse source");
+	diag.add_label(error.span, "betwixt");
+	diag.print(code);
 }
 
 int main(void) {

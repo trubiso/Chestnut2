@@ -135,6 +135,7 @@
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Identifier.h" />
+    <ClInclude Include="OutFmt.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Program.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Identifier.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="OutFmt.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Statement.cpp" />
     <ClCompile Include="Type.cpp" />

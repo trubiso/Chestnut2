@@ -1,22 +1,12 @@
 func silly() void {
-	let a = 3 + 4 * -5 - 8 + 7 +
-	2
-	- (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
+	let a = 3 + 4 * -5 - 8 + 7
+	      + e
+	      - (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
 	mut b = 28
 	let k: i32 = 2
 	mut y: i32
 }
 
 func main() void {
-	let mut = pure func method struct enum union
-	+ - * / & | ^ ~ = < > ! ? % @ ( ) [ ] { } . .. ... , : :: ; -> => {
-		let a = 3.14
-		let b = 9.28
-		let c = "hey"
-		let d = 'u'
-		let k = e
-		      + c + d + f
-			  - r - t - v
-		let d = k + 1
-	}
+	let mut = pure union {}
 }

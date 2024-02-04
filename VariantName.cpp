@@ -103,3 +103,15 @@ char const *get_variant_name(Token::Symbol symbol) {
 		return "=>";
 	}
 }
+
+char const *get_variant_name(Diagnostic::Severity severity) {
+	using enum Diagnostic::Severity;
+	switch (severity) {
+	case Error:
+		return "error";
+	case Warning:
+		return "warning";
+	case Note:
+		return "note";
+	}
+}
