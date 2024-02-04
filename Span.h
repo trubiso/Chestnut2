@@ -14,3 +14,8 @@ struct Span {
 		return source.substr(start, end - start);
 	}
 };
+
+template <typename T> struct Spanned {
+	T value;
+	Span span;
+};

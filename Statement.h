@@ -10,10 +10,10 @@ struct Statement {
 	enum class Kind { Create };
 
 	struct Create {
-		Type type;
-		Identifier identifier;
-		bool mutable_;
-		std::optional<Expression> value;
+		Spanned<Type> type;
+		Spanned<Identifier> identifier;
+		Spanned<bool> mutable_;
+		std::optional<Spanned<Expression>> value;
 	};
 
 	Kind kind;

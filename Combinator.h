@@ -171,7 +171,17 @@ template <typename T, typename E, typename V> Parser<T, E, V> must(Parser<T, E, 
 
 // TODO: validate (adds warnings instead of errors)
 
-// TODO: spanned
+template <typename T, typename E, typename V>
+Parser<Spanned<T>, E, V> spanned(Parser<T, E, V> const &parser) {
+	return [=](Stream<V> &input, std::vector<Error> &errors) -> Result<Spanned<T>, E> {
+		size_t start = input.index();
+		Result<T, E> result = parser(input, errors);
+		if (!bool(result))
+			return std::get<E>(result);
+		size_t end = input.index();
+		return Spanned<T>{.value = std::get<T>(result), .span = Span(start, end)};
+	};
+}
 
 template <typename T, typename E, typename V>
 Parser<std::optional<T>, E, V> as_optional(Parser<T, E, V> const &parser) {

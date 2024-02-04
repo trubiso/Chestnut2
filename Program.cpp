@@ -4,9 +4,11 @@
 namespace AST {
 
 Parser::Parser<Program> program() {
-	return Parser::transform(
-	    Parser::many(Parser::trailing_semis() >> function() << Parser::trailing_semis()),
-	    [](std::vector<Function> const &functions) { return Program{.functions = functions}; });
+	using namespace Parser;
+	return transform(many(trailing_semis() >> spanned(function()) << trailing_semis()),
+	                 [](std::vector<Spanned<Function>> const &functions) {
+		                 return Program{.functions = functions};
+	                 });
 }
 
 } // namespace AST

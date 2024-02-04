@@ -21,7 +21,9 @@ Parser::Parser<Type> type_inferred();
 
 Parser::Parser<Type> type();
 
-Parser::Parser<std::tuple<Identifier, Type>> identifier_with_type();
-Parser::Parser<std::tuple<Identifier, std::optional<Type>>> identifier_with_optional_type();
+typedef std::tuple<Spanned<Identifier>, Spanned<Type>> IdentifierWithType;
+Parser::Parser<IdentifierWithType> identifier_with_type();
+Parser::Parser<std::tuple<Spanned<Identifier>, std::optional<Spanned<Type>>>>
+identifier_with_optional_type();
 
 } // namespace AST

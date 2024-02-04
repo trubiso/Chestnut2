@@ -17,14 +17,14 @@ struct Expression {
 	};
 
 	struct BinaryOperation {
-		Box<Expression> lhs;
-		Box<Expression> rhs;
-		Token::Symbol operator_;
+		Box<Spanned<Expression>> lhs;
+		Box<Spanned<Expression>> rhs;
+		Spanned<Token::Symbol> operator_;
 	};
 
 	struct UnaryOperation {
-		Box<Expression> value;
-		Token::Symbol operator_;
+		Box<Spanned<Expression>> value;
+		Spanned<Token::Symbol> operator_;
 	};
 
 	Kind kind;

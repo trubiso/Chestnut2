@@ -24,12 +24,15 @@ Parser::Parser<Type> type_inferred() {
 
 Parser::Parser<Type> type() { return type_inferred() | type_identified(); }
 
-Parser::Parser<std::tuple<Identifier, Type>> identifier_with_type() {
-	return identifier() & (Parser::token_symbol(Token::Symbol::Colon) >> type());
+Parser::Parser<std::tuple<Spanned<Identifier>, Spanned<Type>>> identifier_with_type() {
+	return Parser::spanned(identifier()) &
+	       (Parser::token_symbol(Token::Symbol::Colon) >> Parser::spanned(type()));
 }
 
-Parser::Parser<std::tuple<Identifier, std::optional<Type>>> identifier_with_optional_type() {
-	return identifier() & optional(Parser::token_symbol(Token::Symbol::Colon) >> type());
+Parser::Parser<std::tuple<Spanned<Identifier>, std::optional<Spanned<Type>>>>
+identifier_with_optional_type() {
+	return Parser::spanned(identifier()) &
+	       optional(Parser::token_symbol(Token::Symbol::Colon) >> Parser::spanned(type()));
 }
 
 } // namespace AST

@@ -40,7 +40,7 @@ void debug(AST::Type const &type) {
 	std::cout << "]";
 }
 
-void debug(std::tuple<AST::Identifier, AST::Type> const &pair) {
+void debug(AST::IdentifierWithType const &pair) {
 	debug(std::get<0>(pair));
 	std::cout << ": ";
 	debug(std::get<1>(pair));
@@ -90,7 +90,7 @@ void debug(AST::Statement const &statement) {
 		std::cout << "CREATE [";
 		debug(create.type);
 		std::cout << " ";
-		if (create.mutable_)
+		if (create.mutable_.value)
 			std::cout << "(mutable) ";
 		debug(create.identifier);
 		if (create.value.has_value()) {
@@ -125,7 +125,7 @@ void debug(AST::Function const &function) {
 		std::cout << "omitted\n";
 	} else {
 		std::cout << "{\n";
-		debug(function.body.value(), "\n");
+		debug(function.body.value().value, "\n");
 		std::cout << "\n}\n";
 	}
 }

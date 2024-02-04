@@ -5,7 +5,7 @@
 namespace AST {
 
 struct Program {
-	std::vector<Function> functions;
+	std::vector<Spanned<Function>> functions;
 };
 
 Parser::Parser<Program> program();

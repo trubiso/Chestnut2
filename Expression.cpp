@@ -26,31 +26,31 @@ Parser::Parser<Expression> expression_atom() {
 }
 
 #define BINARY_OPERATOR(OP, NEXT)                                                                  \
-	transform(NEXT &many(OP &NEXT),                                                                \
-	          [](std::tuple<Expression, std::vector<std::tuple<Token::Symbol, Expression>>> const  \
-	                 &data) {                                                                      \
-		          Expression lhs = std::get<0>(data);                                              \
-		          for (std::tuple<Token::Symbol, Expression> const &pair : std::get<1>(data)) {    \
-			          Token::Symbol const &operator_ = std::get<0>(pair);                          \
-			          Expression const &rhs = std::get<1>(pair);                                   \
-			          Expression::BinaryOperation operation{                                       \
-			              .lhs = lhs, .rhs = rhs, .operator_ = operator_};                         \
-			          lhs = Expression{.kind = Expression::Kind::BinaryOperation,                  \
-			                           .value = operation};                                        \
-		          }                                                                                \
-		          return lhs;                                                                      \
-	          })
+	transform(spanned(NEXT) & many(spanned(OP) & spanned(NEXT)), [](auto const &data) {            \
+		Spanned<Expression> lhs = std::get<0>(data);                                               \
+		for (auto const &pair : std::get<1>(data)) {                                               \
+			auto const &operator_ = std::get<0>(pair);                                             \
+			auto const &rhs = std::get<1>(pair);                                                   \
+			Expression::BinaryOperation operation{.lhs = lhs, .rhs = rhs, .operator_ = operator_}; \
+			lhs =                                                                                  \
+			    Spanned<Expression>{.value = Expression{.kind = Expression::Kind::BinaryOperation, \
+			                                            .value = operation},                       \
+			                        .span = Span(lhs.span.start, rhs.span.end)};                   \
+		}                                                                                          \
+		return lhs.value;                                                                          \
+	})
 
 #define UNARY_OPERATOR(OP, NEXT)                                                                   \
-	transform(                                                                                     \
-	    many(OP) & NEXT, [](std::tuple<std::vector<Token::Symbol>, Expression> const &data) {      \
-		    Expression rhs = std::get<1>(data);                                                    \
-		    for (Token::Symbol const &operator_ : std::get<0>(data)) {                             \
-			    Expression::UnaryOperation operation{.value = rhs, .operator_ = operator_};        \
-			    rhs = Expression{.kind = Expression::Kind::UnaryOperation, .value = operation};    \
-		    }                                                                                      \
-		    return rhs;                                                                            \
-	    })
+	transform(many(spanned(OP)) & spanned(NEXT), [](auto const &data) {                            \
+		Spanned<Expression> rhs = std::get<1>(data);                                               \
+		for (auto const &operator_ : std::get<0>(data)) {                                          \
+			Expression::UnaryOperation operation{.value = rhs, .operator_ = operator_};            \
+			rhs = Spanned<Expression>{                                                             \
+			    .value = Expression{.kind = Expression::Kind::UnaryOperation, .value = operation}, \
+			    .span = Span(operator_.span.start, rhs.span.end)};                                 \
+		}                                                                                          \
+		return rhs.value;                                                                          \
+	})
 
 #define OPERATOR(OP) (token_symbol(OP) >> constant(OP))
 

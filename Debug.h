@@ -12,7 +12,7 @@
 void debug(Token const &);
 void debug(AST::Identifier const &);
 void debug(AST::Type const &);
-void debug(std::tuple<AST::Identifier, AST::Type> const &);
+void debug(AST::IdentifierWithType const &);
 void debug(AST::Expression const &);
 void debug(AST::Statement const &);
 void debug(AST::Function::Signature const &);
@@ -27,6 +27,8 @@ template <typename T> void debug(std::optional<T> const &value) {
 	if (value.has_value())
 		debug(value.value());
 }
+
+template <typename T> inline void debug(Spanned<T> const &value) { debug(value.value); }
 
 template <typename T> void debug(std::vector<T> const &vector, char const *separator = ", ") {
 	for (size_t i = 0; i < vector.size(); ++i) {

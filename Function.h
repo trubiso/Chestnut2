@@ -7,13 +7,15 @@
 namespace AST {
 
 struct Function {
-	Identifier name;
 	struct Signature {
-		std::optional<std::vector<Identifier>> generics;
-		std::vector<std::tuple<Identifier, Type>> arguments;
-		Type return_type;
-	} signature;
-	std::optional<Scope> body;
+		std::optional<Spanned<std::vector<Spanned<Identifier>>>> generics;
+		Spanned<std::vector<Spanned<IdentifierWithType>>> arguments;
+		Spanned<Type> return_type;
+	};
+
+	Spanned<Identifier> name;
+	Spanned<Signature> signature;
+	std::optional<Spanned<Scope>> body;
 };
 
 Parser::Parser<Function::Signature> function_signature();
