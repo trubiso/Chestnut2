@@ -2,6 +2,7 @@
 #include "Expression.h"
 #include "Function.h"
 #include "Identifier.h"
+#include "Program.h"
 #include "Statement.h"
 #include "Token.h"
 #include "Type.h"
@@ -16,6 +17,7 @@ void debug(AST::Expression const &);
 void debug(AST::Statement const &);
 void debug(AST::Function::Signature const &);
 void debug(AST::Function const &);
+void debug(AST::Program const &);
 
 void debug(Token::Symbol);
 

@@ -58,7 +58,7 @@ int main(void) {
 
 	auto parse_result = AST::program()(token_stream, accumulated_errors);
 	if (bool(parse_result)) {
-		debug(std::get<AST::Program>(parse_result), "\n\n");
+		debug(std::get<AST::Program>(parse_result));
 	} else {
 		auto error = std::get<Parser::Error>(parse_result);
 		accumulated_errors.push_back(error);

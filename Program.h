@@ -4,7 +4,9 @@
 
 namespace AST {
 
-typedef std::vector<Function> Program;
+struct Program {
+	std::vector<Function> functions;
+};
 
 Parser::Parser<Program> program();
 

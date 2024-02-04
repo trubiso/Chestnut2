@@ -130,4 +130,6 @@ void debug(AST::Function const &function) {
 	}
 }
 
+void debug(AST::Program const &program) { debug(program.functions, "\n\n"); }
+
 void debug(Token::Symbol symbol) { std::cout << get_variant_name(symbol); }
