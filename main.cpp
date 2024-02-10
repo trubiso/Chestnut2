@@ -42,24 +42,22 @@ Diagnostic error_cast(Parser::Error const &error, std::string const &code) {
 
 int main(void) {
 	std::string code = read_file("source");
-	Lexer tokenizer(&code);
-	std::vector<Diagnostic> diagnostics{};
-	std::vector<Token> tokens = tokenizer.collect_all();
 
-	for (auto const &diagnostic : tokenizer.diagnostics()) {
+	// Lexing
+	Lexer lexer(&code);
+	std::vector<Diagnostic> diagnostics{};
+	std::vector<Token> tokens = lexer.collect_all();
+
+	for (auto const &diagnostic : lexer.diagnostics()) {
 		diagnostics.push_back(diagnostic);
 	}
 
-	debug(tokens, "\n");
-	std::cout << "\n" << std::endl;
-
+	// Parsing
 	Stream<Token> token_stream{tokens};
 	std::vector<Parser::Error> accumulated_errors{};
 
 	auto parse_result = AST::program()(token_stream, accumulated_errors);
-	if (bool(parse_result)) {
-		debug(std::get<AST::Program>(parse_result));
-	} else {
+	if (!bool(parse_result)) {
 		auto error = std::get<Parser::Error>(parse_result);
 		accumulated_errors.push_back(error);
 	}
@@ -69,6 +67,27 @@ int main(void) {
 			diagnostics.push_back(error_cast(error, code));
 		}
 	}
+
+	// TODO: Checker (checks the case of variables, checks function overloads)
+	// TODO: Macros (compile-time functions that turn AST into AST? or special syntax?)
+	// TODO: Imports
+
+	// ---- AST lowering
+	// TODO: Expression lowering
+	// TODO: Resolver (turns named identifiers and qualified identifiers into numbers)
+	// TODO: Type inference, coercion and typechecking
+
+	// ---- Analysis
+	// TODO: reference checking (no refs to temporary values, etc)
+	// TODO: RAII (insert defer drops based on ownership)
+	// TODO: Moving/copying
+	// TODO: if, switch, while, return, etc. analysis
+	// TODO: defer
+
+	// ---- Codegen
+	// TODO: codegen to LLVM IR
+	// TODO: inlining
+
 
 	for (auto const &diagnostic : diagnostics) {
 		diagnostic.print(code);
