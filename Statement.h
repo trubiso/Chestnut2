@@ -7,7 +7,7 @@
 namespace AST {
 
 struct Statement {
-	enum class Kind { Create, Set };
+	enum class Kind { Create, Set, BareExpression };
 
 	struct Create {
 		Spanned<Type> type;
@@ -23,12 +23,17 @@ struct Statement {
 		Span operator_span;
 	};
 
+	struct BareExpression {
+		Spanned<Expression> expression;
+	};
+
 	Kind kind;
-	std::variant<Create, Set> value;
+	std::variant<Create, Set, BareExpression> value;
 };
 
 Parser::Parser<Statement> statement_create(bool semicolon);
 Parser::Parser<Statement> statement_set(bool semicolon);
+Parser::Parser<Statement> statement_bare_expression(bool semicolon);
 
 Parser::Parser<Statement> statement(bool semicolon = true);
 

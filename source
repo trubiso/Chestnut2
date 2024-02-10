@@ -10,4 +10,5 @@ func silly() void {
 func main() void {
 	let mut = pure
 	john + pure = union
+	silly + john
 }

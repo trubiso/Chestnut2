@@ -109,6 +109,13 @@ void debug(AST::Statement const &statement) {
 		std::cout << "]";
 		break;
 	}
+	case BareExpression: {
+		auto const &bare_expression = std::get<AST::Statement::BareExpression>(statement.value);
+		std::cout << "BARE EXPRESSION [";
+		debug(bare_expression.expression);
+		std::cout << "]";
+		break;
+	}
 	}
 }
 

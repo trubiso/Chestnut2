@@ -77,8 +77,18 @@ Parser::Parser<Statement> statement_set(bool semicolon) {
 	});
 }
 
+Parser::Parser<Statement> statement_bare_expression(bool semicolon) {
+	using namespace Parser;
+	auto bare_expression_statement = spanned(expression()) << eol(semicolon);
+	return transform(bare_expression_statement, [](auto const &data) {
+		return Statement{.kind = Statement::Kind::BareExpression,
+		                 .value = Statement::BareExpression{.expression = data}};
+	});
+}
+
 Parser::Parser<Statement> statement(bool semicolon) {
-	auto statement = statement_create(semicolon) | statement_set(semicolon);
+	auto statement = statement_create(semicolon) | statement_set(semicolon) |
+	                 statement_bare_expression(semicolon);
 	return statement;
 }
 
