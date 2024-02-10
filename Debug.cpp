@@ -100,6 +100,15 @@ void debug(AST::Statement const &statement) {
 		std::cout << "]";
 		break;
 	}
+	case Set: {
+		auto const &set = std::get<AST::Statement::Set>(statement.value);
+		std::cout << "SET [";
+		debug(set.lhs);
+		std::cout << " = ";
+		debug(set.rhs);
+		std::cout << "]";
+		break;
+	}
 	}
 }
 
@@ -130,6 +139,6 @@ void debug(AST::Function const &function) {
 	}
 }
 
-void debug(AST::Program const &program) { debug(program.functions, "\n\n"); }
+void debug(AST::Program const &program) { debug(program.functions, "\n"); }
 
 void debug(Token::Symbol symbol) { std::cout << get_variant_name(symbol); }

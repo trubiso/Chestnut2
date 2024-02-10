@@ -60,6 +60,8 @@ int main(void) {
 	if (!bool(parse_result)) {
 		auto error = std::get<Parser::Error>(parse_result);
 		accumulated_errors.push_back(error);
+	} else {
+		debug(std::get<AST::Program>(parse_result));
 	}
 
 	if (accumulated_errors.size() > 0) {
@@ -83,11 +85,11 @@ int main(void) {
 	// TODO: Moving/copying
 	// TODO: if, switch, while, return, etc. analysis
 	// TODO: defer
+	// TODO: check if mutability of variables is being violated
 
 	// ---- Codegen
 	// TODO: codegen to LLVM IR
 	// TODO: inlining
-
 
 	for (auto const &diagnostic : diagnostics) {
 		diagnostic.print(code);

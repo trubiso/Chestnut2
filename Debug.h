@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 
+// TODO: for debugging statements, allow some kind of pre-\t
+
 void debug(Token const &);
 void debug(AST::Identifier const &);
 void debug(AST::Type const &);

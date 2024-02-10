@@ -8,6 +8,6 @@ func silly() void {
 }
 
 func main() void {
-	`
-	let mut = pure union {}
+	let mut = pure
+	john + pure = union
 }
