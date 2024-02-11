@@ -21,4 +21,4 @@ struct Function {
 Parser::Parser<Function::Signature> function_signature();
 Parser::Parser<Function> function();
 
-} // namespace AST
+}  // namespace AST

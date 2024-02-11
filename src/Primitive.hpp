@@ -1,6 +1,7 @@
 #pragma once
-#include "Parser.hpp"
 #include <type_traits>
+
+#include "Parser.hpp"
 
 namespace Parser {
 
@@ -14,8 +15,7 @@ template <typename T = Token, typename E = Error, typename V = Token, typename F
 Parser<T, E, V> satisfy(F const &check, std::string error_message) {
 	return [=](Stream<V> &input, ...) -> Result<T, E> {
 		std::optional<T> value = input.peek();
-		if (!value.has_value())
-			return Error(make_span(input), "unexpected EOF");
+		if (!value.has_value()) return Error(make_span(input), "unexpected EOF");
 		if (check(value.value())) {
 			input.ignore();
 			return value.value();
@@ -25,4 +25,4 @@ Parser<T, E, V> satisfy(F const &check, std::string error_message) {
 	};
 }
 
-} // namespace Parser
+}  // namespace Parser

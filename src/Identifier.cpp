@@ -1,4 +1,5 @@
 #include "Identifier.hpp"
+
 #include "Specific.hpp"
 
 namespace AST {
@@ -44,4 +45,4 @@ Parser::Parser<Identifier> identifier_qualified() {
 	       identifier();
 }
 
-} // namespace AST
+}  // namespace AST

@@ -5,16 +5,14 @@
 
 std::optional<std::tuple<Token, std::optional<Token>>> Lexer::next() {
 	consume_whitespace();
-	if (!current().has_value())
-		return {};
+	if (!current().has_value()) return {};
 	char current_value = current().value();
 	bool should_attempt_semicolon = false;
 	while (current_value == '\n') {
 		should_attempt_semicolon = true;
 		advance();
 		consume_whitespace();
-		if (!current().has_value())
-			return {};
+		if (!current().has_value()) return {};
 		current_value = current().value();
 	}
 
@@ -68,21 +66,18 @@ std::optional<std::tuple<Token, std::optional<Token>>> Lexer::next() {
 			break;
 		}
 		default:
-			m_diagnostics.push_back(
-			    Diagnostic(Diagnostic::Severity::Error, "unknown character",
-			               (std::string) "the character '" + current_value +
-			                   (std::string) "' isn't supported by the lexer")
-			        .add_label(Span(m_index, m_index + 1)));
+			m_diagnostics.push_back(Diagnostic(Diagnostic::Severity::Error, "unknown character",
+			                                   (std::string) "the character '" + current_value +
+			                                       (std::string) "' isn't supported by the lexer")
+			                            .add_label(Span(m_index, m_index + 1)));
 			return {};
 		}
 
 	std::optional<Token> semicolon = {};
 	if (should_attempt_semicolon) {
 		bool insert = false;
-		if (kind == Token::Kind::Identifier)
-			insert = true;
-		if (kind == Token::Kind::Symbol)
-			switch (symbol) {
+		if (kind == Token::Kind::Identifier) insert = true;
+		if (kind == Token::Kind::Symbol) switch (symbol) {
 			case Token::Symbol::Plus:
 			case Token::Symbol::Minus:
 			case Token::Symbol::Star:
@@ -140,11 +135,9 @@ std::vector<Token> Lexer::collect_all() {
 	std::vector<Token> tokens{};
 	while (true) {
 		std::optional<std::tuple<Token, std::optional<Token>>> next_token = next();
-		if (!next_token.has_value())
-			break;
+		if (!next_token.has_value()) break;
 		auto const &[token, semicolon] = next_token.value();
-		if (semicolon.has_value())
-			tokens.push_back(semicolon.value());
+		if (semicolon.has_value()) tokens.push_back(semicolon.value());
 		tokens.push_back(token);
 	}
 	tokens.push_back(Token{.span = Span{m_index, m_index + 1},
@@ -174,10 +167,10 @@ void Lexer::consume_number_literal() {
 		case 'x':
 		case 'b':
 		case 'o':
-			advance(); // consume the base character
+			advance();  // consume the base character
 			break;
 		case '.':
-			advance(); // consume the decimal point (0x, 0b, 0o are integer only)
+			advance();  // consume the decimal point (0x, 0b, 0o are integer only)
 			break;
 		}
 	}
@@ -187,18 +180,17 @@ void Lexer::consume_number_literal() {
 
 void Lexer::consume_wrapped_literal(char wrap, std::string name) {
 	size_t span_begin = m_index;
-	advance(); // consume wrap character
-	while (is_index_valid() && current().value() != wrap)
-		advance();
+	advance();  // consume wrap character
+	while (is_index_valid() && current().value() != wrap) advance();
 	if (!is_index_valid()) {
 		m_diagnostics.push_back(
-		    Diagnostic(Diagnostic::Severity::Error, "unclosed " + name,
-		               "a " + name +
-		                   (std::string) " was opened, but the closing quote couldn't be found")
+		    Diagnostic(
+		        Diagnostic::Severity::Error, "unclosed " + name,
+		        "a " + name + (std::string) " was opened, but the closing quote couldn't be found")
 		        .add_label(Span(span_begin, m_source->size())));
 		return;
 	}
-	advance(); // consume wrap character
+	advance();  // consume wrap character
 }
 
 Token::Symbol from_char(char c) {

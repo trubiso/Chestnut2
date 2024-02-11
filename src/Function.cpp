@@ -1,4 +1,5 @@
 #include "Function.hpp"
+
 #include "Specific.hpp"
 
 namespace AST {
@@ -35,4 +36,4 @@ Parser::Parser<Function> function() {
 	});
 }
 
-} // namespace AST
+}  // namespace AST

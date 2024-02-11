@@ -38,9 +38,7 @@ void color(Color color) {
 }
 // clang-format on
 #else
-void set_color_inner(uint8_t color) {
-	std::cout << "\033[" << (int32_t)color << 'm';
-}
+void set_color_inner(uint8_t color) { std::cout << "\033[" << (int32_t)color << 'm'; }
 
 // clang-format off
 void color(Color color) {
@@ -69,4 +67,4 @@ void color(Color color) {
 
 void color_reset() { color(Color::White); }
 
-} // namespace OutFmt
+}  // namespace OutFmt

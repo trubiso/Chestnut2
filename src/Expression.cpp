@@ -1,14 +1,15 @@
 #include "Expression.hpp"
+
 #include "Combinator.hpp"
 #include "Primitive.hpp"
 #include "Specific.hpp"
 
 namespace AST {
 
-#define PARSER_LITERAL(T)                                                                          \
-	::Parser::transform(Parser::token_kind(Token::Kind::T), [](Token const &token) {               \
-		return Expression{.kind = Expression::Kind::T,                                             \
-		                  .value = std::get<std::string>(token.value)};                            \
+#define PARSER_LITERAL(T)                                                            \
+	::Parser::transform(Parser::token_kind(Token::Kind::T), [](Token const &token) { \
+		return Expression{.kind = Expression::Kind::T,                               \
+		                  .value = std::get<std::string>(token.value)};              \
 	})
 
 Parser::Parser<Expression> expression_char_literal() { return PARSER_LITERAL(CharLiteral); }
@@ -68,4 +69,4 @@ Parser::Parser<Expression> expression() {
 	return binary_plus_minus;
 }
 
-} // namespace AST
+}  // namespace AST

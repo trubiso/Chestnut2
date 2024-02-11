@@ -3,6 +3,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+
 #include "Parser.hpp"
 
 namespace AST {
@@ -25,4 +26,4 @@ struct Identifier {
 Parser::Parser<Identifier> identifier();
 Parser::Parser<Identifier> identifier_qualified();
 
-} // namespace AST
+}  // namespace AST

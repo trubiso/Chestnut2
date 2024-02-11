@@ -1,6 +1,7 @@
 #pragma once
-#include "Function.hpp"
 #include <vector>
+
+#include "Function.hpp"
 
 namespace AST {
 
@@ -10,4 +11,4 @@ struct Program {
 
 Parser::Parser<Program> program();
 
-} // namespace AST
+}  // namespace AST

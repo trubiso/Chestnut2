@@ -1,7 +1,9 @@
 #include "Diagnostic.hpp"
+
+#include <iostream>
+
 #include "OutFmt.hpp"
 #include "VariantName.hpp"
-#include <iostream>
 
 #define TAB_WIDTH 4
 
@@ -33,7 +35,7 @@ std::tuple<size_t, size_t> loc(std::string const &code, size_t idx, bool look_fo
 	for (size_t i = 0; i < std::min(idx, code.size()); ++i) {
 		if (code.at(i) == '\n') {
 			line_number++;
-			line_index = i + 1; // skip the newline
+			line_index = i + 1;  // skip the newline
 		}
 	}
 	if (look_for_next) {
@@ -44,8 +46,7 @@ std::tuple<size_t, size_t> loc(std::string const &code, size_t idx, bool look_fo
 				break;
 			}
 		}
-		if (old_line_index == line_index)
-			line_index = code.size();
+		if (old_line_index == line_index) line_index = code.size();
 	}
 	return {line_number, line_index};
 }
@@ -58,8 +59,7 @@ void print_loc_line(size_t loc_pad, std::optional<size_t> loc_current = {}) {
 		std::cout << std::string(loc_pad + 1, ' ');
 	} else {
 		auto size = number_size(loc_current.value());
-		if (size <= loc_pad + 1)
-			std::cout << std::string(loc_pad + 1 - size, ' ');
+		if (size <= loc_pad + 1) std::cout << std::string(loc_pad + 1 - size, ' ');
 		std::cout << loc_current.value();
 	}
 	std::cout << " | ";
@@ -71,10 +71,8 @@ void print_labels(std::vector<Diagnostic::Label> const &labels, std::string cons
 	size_t start_l = SIZE_MAX;
 	size_t end_l = 0;
 	for (Diagnostic::Label const &label : labels) {
-		if (label.span.start < start_l)
-			start_l = label.span.start;
-		if (label.span.end > end_l)
-			end_l = label.span.end;
+		if (label.span.start < start_l) start_l = label.span.start;
+		if (label.span.end > end_l) end_l = label.span.end;
 	}
 
 	auto [loc_start, start_index] = loc(code, start_l);
@@ -88,10 +86,8 @@ void print_labels(std::vector<Diagnostic::Label> const &labels, std::string cons
 
 	for (size_t i = start_index; i < end_index; ++i) {
 		if (i == start_index || code.at(i) == '\n') {
-			if (i != start_index)
-				std::cout << '\n';
-			if (code.at(i) == '\n')
-				++loc_current;
+			if (i != start_index) std::cout << '\n';
+			if (code.at(i) == '\n') ++loc_current;
 			std::string loc_current_str = std::to_string(loc_current);
 			print_loc_line(loc_pad, loc_current);
 		}

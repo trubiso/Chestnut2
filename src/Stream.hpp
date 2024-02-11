@@ -7,8 +7,7 @@ public:
 	Stream(std::vector<T> data) : m_data(data), m_index(0) {}
 
 	constexpr inline std::optional<T> at(size_t index) const {
-		if (index >= m_data.size())
-			return {};
+		if (index >= m_data.size()) return {};
 		return m_data.at(index);
 	}
 

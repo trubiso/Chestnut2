@@ -1,5 +1,4 @@
 BasedOnStyle: Google
-ArrayInitializerAlignmentStyle: AIAS_Right
 IndentWidth: 4
 TabWidth: 4
 UseTab: ForIndentation

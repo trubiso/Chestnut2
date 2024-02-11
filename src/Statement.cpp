@@ -1,4 +1,5 @@
 #include "Statement.hpp"
+
 #include "Specific.hpp"
 
 namespace AST {
@@ -96,4 +97,4 @@ Parser::Parser<std::vector<Statement>> scope() {
 	return Parser::braced(Parser::trailing_semis() >> Parser::many(statement()));
 }
 
-} // namespace AST
+}  // namespace AST

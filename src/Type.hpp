@@ -1,6 +1,7 @@
 #pragma once
-#include "Identifier.hpp"
 #include <variant>
+
+#include "Identifier.hpp"
 
 namespace AST {
 
@@ -26,4 +27,4 @@ Parser::Parser<IdentifierWithType> identifier_with_type();
 Parser::Parser<std::tuple<Spanned<Identifier>, std::optional<Spanned<Type>>>>
 identifier_with_optional_type();
 
-} // namespace AST
+}  // namespace AST

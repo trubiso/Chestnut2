@@ -1,15 +1,16 @@
 #pragma once
+#include <optional>
+
 #include "Parser.hpp"
 #include "Primitive.hpp"
-#include <optional>
 
 namespace Parser {
 
-#define lazy(parser)                                                                               \
-	::Parser::Parser<typename std::decay_t<decltype(parser)>::value_type,                          \
-	                 typename std::decay_t<decltype(parser)>::error_type,                          \
-	                 typename std::decay_t<decltype(parser)>::inner_input_type> {                  \
-		[=](auto &input, auto &errors) { return (parser)(input, errors); }                         \
+#define lazy(parser)                                                              \
+	::Parser::Parser<typename std::decay_t<decltype(parser)>::value_type,         \
+	                 typename std::decay_t<decltype(parser)>::error_type,         \
+	                 typename std::decay_t<decltype(parser)>::inner_input_type> { \
+		[=](auto &input, auto &errors) { return (parser)(input, errors); }        \
 	}
 
 // if A == B, return A, otherwise std::variant<A, B>
@@ -22,8 +23,7 @@ auto transform(Parser<T, E, V> const &parser, F const &function)
 	return [=](Stream<V> &input,
 	           std::vector<Error> &errors) -> Result<decltype(function(std::declval<T>())), E> {
 		Result<T, E> result = parser(input, errors);
-		if (!bool(result))
-			return std::get<E>(result);
+		if (!bool(result)) return std::get<E>(result);
 		return function(std::get<T>(result));
 	};
 }
@@ -35,11 +35,9 @@ Parser<T, or_t<E, Error>, V> filter(Parser<T, E, V> const &parser, F const &func
 	return [=](Stream<V> &input, std::vector<Error> &errors) -> Result<T, or_t<E, Error>> {
 		size_t original_index = input.index();
 		Result<T, E> result = parser(input, errors);
-		if (!bool(result))
-			return std::get<E>(result);
+		if (!bool(result)) return std::get<E>(result);
 		std::optional<std::string> transformed = function(std::get<T>(result));
-		if (!transformed.has_value())
-			return std::get<T>(result);
+		if (!transformed.has_value()) return std::get<T>(result);
 		Error error(make_span(input, original_index, input.index()), transformed.value());
 		input.set_index(original_index);
 		return error;
@@ -52,29 +50,28 @@ Parser<std::vector<T>, E, V> many(Parser<T, E, V> const &parser) {
 		std::vector<T> elements{};
 		while (true) {
 			Result<T, E> element = parser(input, errors);
-			if (!bool(element))
-				return elements;
+			if (!bool(element)) return elements;
 			elements.push_back(std::get<T>(element));
 		}
 	};
 }
 
 template <typename T, typename E, typename V>
-inline Parser<std::vector<T>, or_t<E, Error>, V>
-at_least(Parser<T, E, V> const &parser, size_t minimum, std::string error_message) {
-	if (minimum == 0)
-		return many(parser);
+inline Parser<std::vector<T>, or_t<E, Error>, V> at_least(Parser<T, E, V> const &parser,
+                                                          size_t minimum,
+                                                          std::string error_message) {
+	if (minimum == 0) return many(parser);
 	return filter(many(parser), [=](std::vector<T> const &element) -> std::optional<std::string> {
-		if (element.size() >= minimum)
-			return {};
+		if (element.size() >= minimum) return {};
 		return error_message;
 	});
 }
 
 template <typename Ta, typename Ea, typename Tb, typename Eb, typename V>
-Parser<std::vector<Ta>, Ea, V>
-separated_no_trailing_at_least(Parser<Ta, Ea, V> const &parser, Parser<Tb, Eb, V> const &separator,
-                               size_t minimum, std::string error_message) {
+Parser<std::vector<Ta>, Ea, V> separated_no_trailing_at_least(Parser<Ta, Ea, V> const &parser,
+                                                              Parser<Tb, Eb, V> const &separator,
+                                                              size_t minimum,
+                                                              std::string error_message) {
 	return transform(parser & at_least(separator >> parser, minimum, error_message),
 	                 [](std::tuple<Ta, std::vector<Ta>> const &data) {
 		                 std::vector<Ta> new_data = std::get<1>(data);
@@ -131,11 +128,9 @@ Parser<or_t<Ta, Tb>, or_t<Ea, Eb>, V> operator|(Parser<Ta, Ea, V> const &a,
                                                 Parser<Tb, Eb, V> const &b) {
 	return [=](Stream<V> &input, std::vector<Error> &errors) -> Result<or_t<Ta, Tb>, or_t<Ea, Eb>> {
 		Result<Ta, Ea> result_a = a(input, errors);
-		if (bool(result_a))
-			return std::get<Ta>(result_a);
+		if (bool(result_a)) return std::get<Ta>(result_a);
 		Result<Tb, Eb> result_b = b(input, errors);
-		if (bool(result_b))
-			return std::get<Tb>(result_b);
+		if (bool(result_b)) return std::get<Tb>(result_b);
 		return std::get<Ea>(result_a) | std::get<Eb>(result_b);
 	};
 }
@@ -148,8 +143,7 @@ Parser<std::tuple<Ta, Tb>, or_t<Ea, Eb>, V> operator&(Parser<Ta, Ea, V> const &a
 	           std::vector<Error> &errors) -> Result<std::tuple<Ta, Tb>, or_t<Ea, Eb>> {
 		size_t original_index = input.index();
 		Result<Ta, Ea> result_a = a(input, errors);
-		if (!bool(result_a))
-			return std::get<Ea>(result_a);
+		if (!bool(result_a)) return std::get<Ea>(result_a);
 		Result<Tb, Eb> result_b = b(input, errors);
 		if (!bool(result_b)) {
 			input.set_index(original_index);
@@ -177,8 +171,7 @@ Parser<Spanned<T>, E, V> spanned(Parser<T, E, V> const &parser) {
 	return [=](Stream<V> &input, std::vector<Error> &errors) -> Result<Spanned<T>, E> {
 		size_t start = input.index();
 		Result<T, E> result = parser(input, errors);
-		if (!bool(result))
-			return std::get<E>(result);
+		if (!bool(result)) return std::get<E>(result);
 		size_t end = input.index();
 		return Spanned<T>{.value = std::get<T>(result), .span = Span(start, end)};
 	};
@@ -194,4 +187,4 @@ Parser<std::optional<T>, E, V> optional(Parser<T, E, V> const &parser) {
 	return as_optional(parser) | constant<std::optional<T>, E, V>(std::nullopt);
 }
 
-} // namespace Parser
+}  // namespace Parser

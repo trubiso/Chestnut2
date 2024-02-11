@@ -67,4 +67,4 @@ inline Parser<std::vector<Token>> eol(bool semicolon = true) {
 	return at_least(token_symbol(Token::Symbol::Semicolon), semicolon ? 1 : 0, "newline/semicolon");
 }
 
-} // namespace Parser
+}  // namespace Parser

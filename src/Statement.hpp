@@ -41,4 +41,4 @@ typedef std::vector<Statement> Scope;
 
 Parser::Parser<Scope> scope();
 
-} // namespace AST
+}  // namespace AST

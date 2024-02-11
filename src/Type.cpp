@@ -1,4 +1,5 @@
 #include "Type.hpp"
+
 #include "Specific.hpp"
 
 namespace AST {
@@ -35,4 +36,4 @@ identifier_with_optional_type() {
 	       optional(Parser::token_symbol(Token::Symbol::Colon) >> Parser::spanned(type()));
 }
 
-} // namespace AST
+}  // namespace AST

@@ -1,4 +1,5 @@
 #include "Debug.hpp"
+
 #include "VariantName.hpp"
 
 void debug(Token const &token) {
@@ -18,8 +19,7 @@ void debug(AST::Identifier const &identifier) {
 		break;
 	case Qualified: {
 		auto const &path = std::get<AST::Identifier::QualifiedPath>(identifier.value);
-		if (path.absolute)
-			std::cout << "::";
+		if (path.absolute) std::cout << "::";
 		debug(path.path, "::");
 		break;
 	}
@@ -90,8 +90,7 @@ void debug(AST::Statement const &statement) {
 		std::cout << "CREATE [";
 		debug(create.type);
 		std::cout << " ";
-		if (create.mutable_.value)
-			std::cout << "(mutable) ";
+		if (create.mutable_.value) std::cout << "(mutable) ";
 		debug(create.identifier);
 		if (create.value.has_value()) {
 			std::cout << " = ";

@@ -1,10 +1,11 @@
-#include "Debug.hpp"
-#include "Lexer.hpp"
-#include "Program.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include "Debug.hpp"
+#include "Lexer.hpp"
+#include "Program.hpp"
 
 std::string read_file(char const *path) noexcept {
 	std::string content;

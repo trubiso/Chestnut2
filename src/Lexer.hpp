@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Diagnostic.hpp"
-#include "Token.hpp"
 #include <optional>
 #include <string>
 #include <vector>
+
+#include "Diagnostic.hpp"
+#include "Token.hpp"
 
 class Lexer {
 public:
@@ -17,8 +18,7 @@ public:
 
 private:
 	constexpr inline std::optional<std::reference_wrapper<char const>> current() const {
-		if (!is_index_valid())
-			return {};
+		if (!is_index_valid()) return {};
 		return m_source->at(m_index);
 	}
 

@@ -22,8 +22,7 @@ struct Error {
 
 inline Error operator|(Error const &l, Error const &r) {
 	std::set<std::string> expected = l.expected;
-	for (auto const &expectation : r.expected)
-		expected.insert(expectation);
+	for (auto const &expectation : r.expected) expected.insert(expectation);
 	return Error(l.span, expected);
 }
 
@@ -51,4 +50,4 @@ template <typename V> inline Span make_span(Stream<V> const &input) {
 	return make_span(input, input.index(), input.index());
 }
 
-} // namespace Parser
+}  // namespace Parser

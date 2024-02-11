@@ -1,4 +1,5 @@
 #include "Program.hpp"
+
 #include "Specific.hpp"
 
 namespace AST {
@@ -11,4 +12,4 @@ Parser::Parser<Program> program() {
 	                 });
 }
 
-} // namespace AST
+}  // namespace AST

@@ -1,15 +1,16 @@
 #pragma once
-#include "Span.hpp"
 #include <optional>
 #include <string>
 #include <vector>
 
+#include "Span.hpp"
+
 class Diagnostic {
 public:
 	enum class Severity {
-		Error,   // (red)
-		Warning, // (yellow)
-		Note,    // (blue)
+		Error,    // (red)
+		Warning,  // (yellow)
+		Note,     // (blue)
 	};
 
 	struct Label {

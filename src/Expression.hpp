@@ -47,4 +47,4 @@ Parser::Parser<Expression> expression_atom();
 
 Parser::Parser<Expression> expression();
 
-} // namespace AST
+}  // namespace AST

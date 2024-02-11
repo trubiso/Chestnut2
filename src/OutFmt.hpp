@@ -24,4 +24,4 @@ enum class Color {
 void color(Color);
 void color_reset();
 
-} // namespace OutFmt
+}  // namespace OutFmt
