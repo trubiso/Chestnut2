@@ -3,6 +3,7 @@
 #include "Identifier.h"
 #include "Parser.h"
 #include "Token.h"
+#include "Type.h"
 
 namespace AST {
 
@@ -14,6 +15,7 @@ struct Expression {
 		Identifier,
 		BinaryOperation,
 		UnaryOperation,
+		Call,
 	};
 
 	struct BinaryOperation {
@@ -25,6 +27,12 @@ struct Expression {
 	struct UnaryOperation {
 		Box<Spanned<Expression>> value;
 		Spanned<Token::Symbol> operator_;
+	};
+
+	struct Call {
+		Box<Spanned<Expression>> callee;
+		std::optional<Spanned<std::vector<Spanned<Type>>>> generics;
+		std::optional<Spanned<std::vector<Box<Spanned<Expression>>>>> arguments;
 	};
 
 	Kind kind;

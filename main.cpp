@@ -86,6 +86,9 @@ int main(void) {
 	// TODO: if, switch, while, return, etc. analysis
 	// TODO: defer
 	// TODO: check if mutability of variables is being violated
+	// TODO: calculate size of every type to ensure no recursive structs, although this could be
+	// useful for macros and reflection and compile-time functions in general, so maybe this should
+	// be done earlier
 
 	// ---- Codegen
 	// TODO: codegen to LLVM IR
