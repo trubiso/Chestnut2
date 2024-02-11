@@ -1,6 +1,6 @@
 #pragma once
-#include "Diagnostic.h"
-#include "Token.h"
+#include "Diagnostic.hpp"
+#include "Token.hpp"
 
 char const *get_variant_name(Token::Kind);
 char const *get_variant_name(Token::Keyword);

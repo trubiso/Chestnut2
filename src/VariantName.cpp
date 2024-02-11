@@ -1,4 +1,4 @@
-#include "VariantName.h"
+#include "VariantName.hpp"
 
 char const *get_variant_name(Token::Kind kind) {
 	using enum Token::Kind;

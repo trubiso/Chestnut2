@@ -1,6 +1,6 @@
-#include "Diagnostic.h"
-#include "OutFmt.h"
-#include "VariantName.h"
+#include "Diagnostic.hpp"
+#include "OutFmt.hpp"
+#include "VariantName.hpp"
 #include <iostream>
 
 #define TAB_WIDTH 4
@@ -50,7 +50,7 @@ std::tuple<size_t, size_t> loc(std::string const &code, size_t idx, bool look_fo
 	return {line_number, line_index};
 }
 
-inline constexpr size_t number_size(size_t x) { return std::to_string(x).size(); }
+inline size_t number_size(size_t x) { return std::to_string(x).size(); }
 
 void print_loc_line(size_t loc_pad, std::optional<size_t> loc_current = {}) {
 	OutFmt::color(OutFmt::Color::Gray);

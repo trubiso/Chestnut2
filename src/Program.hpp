@@ -1,5 +1,5 @@
 #pragma once
-#include "Function.h"
+#include "Function.hpp"
 #include <vector>
 
 namespace AST {

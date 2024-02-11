@@ -1,6 +1,6 @@
-#include "Debug.h"
-#include "Lexer.h"
-#include "Program.h"
+#include "Debug.hpp"
+#include "Lexer.hpp"
+#include "Program.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -25,7 +25,7 @@ std::string read_file(char const *path) noexcept {
 	return content;
 }
 
-Diagnostic error_cast(Parser::Error const &error, std::string const &code) {
+Diagnostic error_cast(Parser::Error const &error) {
 	std::string error_title = "expected ";
 	std::vector<std::string> expected(error.expected.begin(), error.expected.end());
 	for (size_t i = 0; i < expected.size(); ++i) {
@@ -66,7 +66,7 @@ int main(void) {
 
 	if (accumulated_errors.size() > 0) {
 		for (auto const &error : accumulated_errors) {
-			diagnostics.push_back(error_cast(error, code));
+			diagnostics.push_back(error_cast(error));
 		}
 	}
 

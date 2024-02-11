@@ -1,9 +1,9 @@
 #pragma once
-#include "Box.h"
-#include "Identifier.h"
-#include "Parser.h"
-#include "Token.h"
-#include "Type.h"
+#include "Box.hpp"
+#include "Identifier.hpp"
+#include "Parser.hpp"
+#include "Token.hpp"
+#include "Type.hpp"
 
 namespace AST {
 

@@ -1,5 +1,5 @@
-#include "Type.h"
-#include "Specific.h"
+#include "Type.hpp"
+#include "Specific.hpp"
 
 namespace AST {
 

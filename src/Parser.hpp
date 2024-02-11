@@ -3,9 +3,9 @@
 #include <set>
 #include <string>
 
-#include "Result.h"
-#include "Stream.h"
-#include "Token.h"
+#include "Result.hpp"
+#include "Stream.hpp"
+#include "Token.hpp"
 
 // thanks to https://github.com/Qqwy/cpp-parser_combinators
 

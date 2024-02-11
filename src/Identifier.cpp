@@ -1,5 +1,5 @@
-#include "Identifier.h"
-#include "Specific.h"
+#include "Identifier.hpp"
+#include "Specific.hpp"
 
 namespace AST {
 

@@ -1,4 +1,4 @@
-#include "Lexer.h"
+#include "Lexer.hpp"
 
 #include <cctype>
 #include <tuple>

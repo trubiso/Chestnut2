@@ -1,5 +1,5 @@
 #pragma once
-#include "Parser.h"
+#include "Parser.hpp"
 #include <type_traits>
 
 namespace Parser {

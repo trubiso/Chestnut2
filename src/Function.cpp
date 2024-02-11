@@ -1,5 +1,5 @@
-#include "Function.h"
-#include "Specific.h"
+#include "Function.hpp"
+#include "Specific.hpp"
 
 namespace AST {
 

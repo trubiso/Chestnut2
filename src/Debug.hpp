@@ -1,11 +1,11 @@
 #pragma once
-#include "Expression.h"
-#include "Function.h"
-#include "Identifier.h"
-#include "Program.h"
-#include "Statement.h"
-#include "Token.h"
-#include "Type.h"
+#include "Expression.hpp"
+#include "Function.hpp"
+#include "Identifier.hpp"
+#include "Program.hpp"
+#include "Statement.hpp"
+#include "Token.hpp"
+#include "Type.hpp"
 #include <iostream>
 #include <vector>
 

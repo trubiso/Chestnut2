@@ -1,13 +1,5 @@
-# Visual Studio generated .clang-format file
-
-# The style options in this file are a best effort attempt to replicate the
-# current IDE formatting configuration from Tools > Options. The following
-# style options, however, should be verified:
-# AfterClass; AfterControlStatement; AfterEnum; AfterFunction; AfterNamespace; 
-# AfterStruct; AfterUnion
-
-BasedOnStyle: LLVM
-UseTab: true
+BasedOnStyle: Google
+ArrayInitializerAlignmentStyle: AIAS_Right
 IndentWidth: 4
 TabWidth: 4
 UseTab: ForIndentation
@@ -23,3 +15,4 @@ SpacesInAngles: Never
 IndentCaseLabels: false
 EmptyLineBeforeAccessModifier: Always
 AccessModifierOffset: -4
+InsertNewlineAtEOF: true

@@ -3,7 +3,7 @@
 #include <string>
 #include <variant>
 #include <vector>
-#include "Parser.h"
+#include "Parser.hpp"
 
 namespace AST {
 

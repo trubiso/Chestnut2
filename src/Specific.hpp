@@ -1,8 +1,8 @@
 #pragma once
-#include "Combinator.h"
-#include "Primitive.h"
-#include "Token.h"
-#include "VariantName.h"
+#include "Combinator.hpp"
+#include "Primitive.hpp"
+#include "Token.hpp"
+#include "VariantName.hpp"
 
 namespace Parser {
 

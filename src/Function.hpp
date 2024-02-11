@@ -1,8 +1,8 @@
 #pragma once
-#include "Identifier.h"
-#include "Parser.h"
-#include "Statement.h"
-#include "Type.h"
+#include "Identifier.hpp"
+#include "Parser.hpp"
+#include "Statement.hpp"
+#include "Type.hpp"
 
 namespace AST {
 

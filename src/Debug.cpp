@@ -1,5 +1,5 @@
-#include "Debug.h"
-#include "VariantName.h"
+#include "Debug.hpp"
+#include "VariantName.hpp"
 
 void debug(Token const &token) {
 	std::cout << "[(" << get_variant_name(token.kind) << ") ";

@@ -1,7 +1,7 @@
-#include "Expression.h"
-#include "Combinator.h"
-#include "Primitive.h"
-#include "Specific.h"
+#include "Expression.hpp"
+#include "Combinator.hpp"
+#include "Primitive.hpp"
+#include "Specific.hpp"
 
 namespace AST {
 
