@@ -32,6 +32,8 @@ template <typename T> void debug(std::optional<T> const &value) {
 
 template <typename T> inline void debug(Spanned<T> const &value) { debug(value.value); }
 
+template <typename T> inline void debug(Box<T> const &value) { debug(*value); }
+
 template <typename T> void debug(std::vector<T> const &vector, char const *separator = ", ") {
 	for (size_t i = 0; i < vector.size(); ++i) {
 		debug(vector.at(i));

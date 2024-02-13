@@ -26,6 +26,26 @@ Parser::Parser<Expression> expression_atom() {
 	       expression_char_literal() | lazy(Parser::parenthesized(expression()));
 }
 
+Parser::Parser<Expression> expression_call() {
+	using namespace Parser;
+	return transform(
+	    spanned(expression_atom()) &
+	        many(optional(spanned(angled(separated_by_comma(spanned(type()))))) &
+	             lazy(spanned(parenthesized(separated_by_comma(boxed(spanned(expression()))))))),
+	    [](auto const &data) {
+		    Spanned<Expression> lhs = std::get<0>(data);
+		    for (auto const &pair : std::get<1>(data)) {
+			    auto const &generics = std::get<0>(pair);
+			    auto const &arguments = std::get<1>(pair);
+			    Expression::Call call{.callee = lhs, .generics = generics, .arguments = arguments};
+			    lhs = Spanned<Expression>{
+			        .value = Expression{.kind = Expression::Kind::Call, .value = call},
+			        .span = Span(lhs.span.start, arguments.span.end)};
+		    }
+		    return lhs.value;
+	    });
+}
+
 #define BINARY_OPERATOR(OP, NEXT)                                                                  \
 	transform(spanned(NEXT) & many(spanned(OP) & spanned(NEXT)), [](auto const &data) {            \
 		Spanned<Expression> lhs = std::get<0>(data);                                               \
@@ -62,7 +82,7 @@ Parser::Parser<Expression> expression() {
 	auto plus_minus = OPERATOR(Plus) | OPERATOR(Minus);
 	auto star_div = OPERATOR(Star) | OPERATOR(Div);
 
-	auto unary_minus = UNARY_OPERATOR(minus, expression_atom());
+	auto unary_minus = UNARY_OPERATOR(minus, expression_call());
 	auto binary_star_div = BINARY_OPERATOR(star_div, unary_minus);
 	auto binary_plus_minus = BINARY_OPERATOR(plus_minus, binary_star_div);
 

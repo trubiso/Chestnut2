@@ -64,11 +64,11 @@ void debug(AST::Expression const &expression) {
 	case BinaryOperation: {
 		auto const &operation = std::get<AST::Expression::BinaryOperation>(expression.value);
 		std::cout << "(";
-		debug(*operation.lhs);
+		debug(operation.lhs);
 		std::cout << " binaryop";
 		debug(operation.operator_);
 		std::cout << " ";
-		debug(*operation.rhs);
+		debug(operation.rhs);
 		std::cout << ")";
 	} break;
 	case UnaryOperation: {
@@ -78,6 +78,18 @@ void debug(AST::Expression const &expression) {
 		std::cout << " ";
 		debug(*operation.value);
 		std::cout << ")";
+	} break;
+	case Call: {
+		auto const &call = std::get<AST::Expression::Call>(expression.value);
+		std::cout << "(call (";
+		debug(call.callee);
+		if (call.generics.has_value()) {
+			std::cout << ") with generics (";
+			debug(call.generics);
+		}
+		std::cout << ") with args (";
+		debug(call.arguments);
+		std::cout << "))";
 	} break;
 	}
 }

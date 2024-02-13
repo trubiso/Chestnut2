@@ -1,6 +1,7 @@
 #pragma once
 #include <optional>
 
+#include "Box.hpp"
 #include "Parser.hpp"
 #include "Primitive.hpp"
 
@@ -175,6 +176,11 @@ Parser<Spanned<T>, E, V> spanned(Parser<T, E, V> const &parser) {
 		size_t end = input.index();
 		return Spanned<T>{.value = std::get<T>(result), .span = Span(start, end)};
 	};
+}
+
+template <typename T, typename E, typename V>
+Parser<Box<T>, E, V> boxed(Parser<T, E, V> const &parser) {
+	return transform(parser, [](auto x) -> Box<T> { return x; });
 }
 
 template <typename T, typename E, typename V>

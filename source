@@ -11,4 +11,5 @@ func main() void {
 	let mut = pure
 	john + pure = union
 	silly + john
+	silly(3, 4, 'a' - 'b')
 }

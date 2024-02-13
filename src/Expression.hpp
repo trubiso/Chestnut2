@@ -32,11 +32,11 @@ struct Expression {
 	struct Call {
 		Box<Spanned<Expression>> callee;
 		std::optional<Spanned<std::vector<Spanned<Type>>>> generics;
-		std::optional<Spanned<std::vector<Box<Spanned<Expression>>>>> arguments;
+		Spanned<std::vector<Box<Spanned<Expression>>>> arguments;
 	};
 
 	Kind kind;
-	std::variant<std::string, Identifier, BinaryOperation, UnaryOperation> value;
+	std::variant<std::string, Identifier, BinaryOperation, UnaryOperation, Call> value;
 };
 
 Parser::Parser<Expression> expression_char_literal();
