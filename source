@@ -8,7 +8,9 @@ func silly() void {
 }
 
 func main() void {
+	let pure = 37
 	let mut = pure
+	let john = 19
 	john + pure = union
 	silly + john
 	silly(3, 4, 'a' - 'b')

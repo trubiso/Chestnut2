@@ -36,7 +36,7 @@ struct Expression {
 	};
 
 	Kind kind;
-	std::variant<std::string, Identifier, BinaryOperation, UnaryOperation, Call> value;
+	std::variant<std::string, Spanned<Identifier>, BinaryOperation, UnaryOperation, Call> value;
 };
 
 Parser::Parser<Expression> expression_char_literal();

@@ -6,6 +6,7 @@
 #include "Debug.hpp"
 #include "Lexer.hpp"
 #include "Program.hpp"
+#include "Resolver.hpp"
 
 std::string read_file(char const *path) noexcept {
 	std::string content;
@@ -71,11 +72,20 @@ int main(void) {
 		}
 	}
 
+	for (auto const &diagnostic : diagnostics) {
+		diagnostic.print(code);
+	}
+
+	if (!diagnostics.empty()) return 0;
+
 	// TODO: Checker (checks the case of variables, checks function overloads)
 	// TODO: Macros (compile-time functions that turn AST into AST? or special syntax?)
 	// TODO: Imports
 
 	// ---- AST lowering
+	AST::Program program = std::get<AST::Program>(parse_result);
+	Resolver::resolve(program);
+	debug(program);
 	// TODO: Expression lowering
 	// TODO: Resolver (turns named identifiers and qualified identifiers into numbers)
 	// TODO: Type inference, coercion and typechecking
@@ -93,11 +103,7 @@ int main(void) {
 
 	// ---- Codegen
 	// TODO: codegen to LLVM IR
-	// TODO: inlining
-
-	for (auto const &diagnostic : diagnostics) {
-		diagnostic.print(code);
-	}
+	// TODO: inlining	
 
 	return 0;
 }

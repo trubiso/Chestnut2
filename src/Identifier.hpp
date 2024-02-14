@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <variant>
 #include <vector>
@@ -12,6 +13,7 @@ struct Identifier {
 	enum class Kind {
 		Unqualified,
 		Qualified,
+		Resolved,
 	};
 
 	struct QualifiedPath {
@@ -20,7 +22,7 @@ struct Identifier {
 	};
 
 	Kind kind;
-	std::variant<std::string, QualifiedPath> value;
+	std::variant<std::string, QualifiedPath, size_t> value;
 };
 
 Parser::Parser<Identifier> identifier();

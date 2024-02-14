@@ -16,7 +16,7 @@ Parser::Parser<Expression> expression_char_literal() { return PARSER_LITERAL(Cha
 Parser::Parser<Expression> expression_string_literal() { return PARSER_LITERAL(StringLiteral); }
 Parser::Parser<Expression> expression_number_literal() { return PARSER_LITERAL(NumberLiteral); }
 Parser::Parser<Expression> expression_identifier() {
-	return Parser::transform(identifier_qualified(), [](Identifier const &identifier) {
+	return Parser::transform(Parser::spanned(identifier_qualified()), [](Spanned<Identifier> const &identifier) {
 		return Expression{.kind = Expression::Kind::Identifier, .value = identifier};
 	});
 }

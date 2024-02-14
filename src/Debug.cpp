@@ -23,6 +23,9 @@ void debug(AST::Identifier const &identifier) {
 		debug(path.path, "::");
 		break;
 	}
+	case Resolved:
+		std::cout << "@" << std::get<size_t>(identifier.value);
+		break;
 	}
 }
 
@@ -59,7 +62,7 @@ void debug(AST::Expression const &expression) {
 		std::cout << "number " << std::get<std::string>(expression.value);
 		break;
 	case Identifier:
-		debug(std::get<AST::Identifier>(expression.value));
+		debug(std::get<Spanned<AST::Identifier>>(expression.value));
 		break;
 	case BinaryOperation: {
 		auto const &operation = std::get<AST::Expression::BinaryOperation>(expression.value);
