@@ -36,6 +36,13 @@ void debug(AST::Type const &type) {
 	case Identified:
 		debug(std::get<AST::Identifier>(type.value));
 		break;
+	case BuiltIn: {
+		auto built_in = std::get<AST::Type::BuiltIn>(type.value);
+		std::cout << get_variant_name(built_in.kind);
+		if (built_in.bit_width.has_value()) {
+			std::cout << " with width " << built_in.bit_width.value();
+		}
+	} break;
 	case Inferred:
 		std::cout << "inferred";
 		break;

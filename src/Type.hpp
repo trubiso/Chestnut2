@@ -6,11 +6,16 @@
 namespace AST {
 
 struct Type {
-	// TODO: BuiltIn, Generic, all composite types, ...
-	enum class Kind { Identified, Inferred };
+	// TODO: Generic, all composite types, ...
+	enum class Kind { Identified, Inferred, BuiltIn };
+
+	struct BuiltIn {
+		enum class Kind { Int, Uint, Float, Char, String, Void } kind;
+		std::optional<uint32_t> bit_width;  // bit_width is only for int/uint/float
+	};
 
 	Kind kind;
-	std::variant<Identifier, std::monostate> value;
+	std::variant<Identifier, BuiltIn, std::monostate> value;
 
 	static inline Type inferred() {
 		return Type{.kind = Kind::Inferred, .value = std::monostate{}};
@@ -18,6 +23,7 @@ struct Type {
 };
 
 Parser::Parser<Type> type_identified();
+Parser::Parser<Type> type_built_in();
 Parser::Parser<Type> type_inferred();
 
 Parser::Parser<Type> type();

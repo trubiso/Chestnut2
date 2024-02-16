@@ -109,6 +109,8 @@ Spanned<AST::Type> resolve(Spanned<AST::Type> const &type, Context &ctx) {
 		                               ctx)
 		                               .value},
 		    .span = type.span};
+	case BuiltIn:
+		return type;  // no need to resolve built in types
 	case Inferred:
 		return type;  // no need to resolve inferred types
 	}

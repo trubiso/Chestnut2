@@ -115,3 +115,21 @@ char const *get_variant_name(Diagnostic::Severity severity) {
 		return "note";
 	}
 }
+
+char const *get_variant_name(AST::Type::BuiltIn::Kind kind) {
+	using enum AST::Type::BuiltIn::Kind;
+	switch (kind) {
+	case Int:
+		return "int";
+	case Uint:
+		return "uint";
+	case Float:
+		return "float";
+	case Char:
+		return "char";
+	case String:
+		return "string";
+	case Void:
+		return "void";
+	}
+}
