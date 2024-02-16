@@ -1,9 +1,9 @@
 #include "Resolver.hpp"
 
 #include <algorithm>
-#include <iostream>
 #include <optional>
 
+#include "Diagnostic.hpp"
 #include "Expression.hpp"
 #include "Function.hpp"
 #include "Identifier.hpp"
@@ -13,10 +13,37 @@
 namespace Resolver {
 
 ID counter = 0;
+std::vector<Diagnostic> diagnostics{};
+
+// TODO: unify identifier to string API with debug API
+std::string identifier_str(AST::Identifier const &identifier) {
+	std::string identifier_str;
+	switch (identifier.kind) {
+	case AST::Identifier::Kind::Unqualified:
+		identifier_str = std::get<std::string>(identifier.value);
+		break;
+	case AST::Identifier::Kind::Qualified: {
+		identifier_str = "";
+		auto path = std::get<AST::Identifier::QualifiedPath>(identifier.value);
+		if (path.absolute) identifier_str += "::";
+		for (size_t i = 0; i < path.path.size(); ++i) {
+			identifier_str += path.path.at(i);
+			if (i < path.path.size() - 1) identifier_str += "::";
+		}
+	} break;
+	case AST::Identifier::Kind::Resolved:
+		throw "unknown name is resolved identifier (should never happen)";
+	}
+	return identifier_str;
+}
 
 void unknown_name(Spanned<AST::Identifier> const &identifier, Context const &ctx) {
-	// TODO: throw diagnostic
-	std::cout << "unknown identifier" << std::endl;
+	std::string id = identifier_str(identifier.value);
+	Diagnostic diagnostic(
+	    Diagnostic::Severity::Error, "unknown symbol",
+	    "identifier " + id + " was referenced, but it doesn't exist in the current scope");
+	diagnostic.add_label(identifier.span);
+	diagnostics.push_back(diagnostic);
 }
 
 Spanned<AST::Identifier> resolve_add(Spanned<AST::Identifier> const &identifier, Context &ctx) {
@@ -202,10 +229,10 @@ AST::Function resolve(AST::Function const &function, Context &ctx) {
 	Context inner_ctx = ctx;
 	auto signature = resolve(function.signature, inner_ctx);
 	auto body = resolve(function.body, inner_ctx);
-	return AST::Function {
-		.name = function.name,
-		.signature = signature,
-		.body = body,
+	return AST::Function{
+	    .name = function.name,
+	    .signature = signature,
+	    .body = body,
 	};
 }
 
@@ -213,10 +240,11 @@ void register_(std::vector<Spanned<AST::Function>> &functions, Context &ctx) {
 	for (auto &function : functions) function.value.name = resolve_add(function.value.name, ctx);
 }
 
-void resolve(AST::Program &program) {
+std::vector<Diagnostic> resolve(AST::Program &program) {
 	Context context{.program = program};
 	register_(program.functions, context);
 	program.functions = resolve(program.functions, context);
+	return diagnostics;
 }
 
 }  // namespace Resolver

@@ -174,7 +174,7 @@ Parser<Spanned<T>, E, V> spanned(Parser<T, E, V> const &parser) {
 		Result<T, E> result = parser(input, errors);
 		if (!bool(result)) return std::get<E>(result);
 		size_t end = input.index();
-		return Spanned<T>{.value = std::get<T>(result), .span = Span(start, end)};
+		return Spanned<T>{.value = std::get<T>(result), .span = make_span(input, start, end - 1)};
 	};
 }
 

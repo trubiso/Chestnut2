@@ -42,6 +42,13 @@ Diagnostic error_cast(Parser::Error const &error) {
 	return diag;
 }
 
+#define PRINT_DIAGS_N_QUIT()                     \
+	for (auto const &diagnostic : diagnostics) { \
+		diagnostic.print(code);                  \
+	}                                            \
+                                                 \
+	if (!diagnostics.empty()) return 0
+
 int main(void) {
 	std::string code = read_file("source");
 
@@ -72,11 +79,7 @@ int main(void) {
 		}
 	}
 
-	for (auto const &diagnostic : diagnostics) {
-		diagnostic.print(code);
-	}
-
-	if (!diagnostics.empty()) return 0;
+	PRINT_DIAGS_N_QUIT();
 
 	// TODO: Checker (checks the case of variables, checks function overloads)
 	// TODO: Macros (compile-time functions that turn AST into AST? or special syntax?)
@@ -84,8 +87,11 @@ int main(void) {
 
 	// ---- AST lowering
 	AST::Program program = std::get<AST::Program>(parse_result);
-	Resolver::resolve(program);
+	auto resolver_diagnostics = Resolver::resolve(program);
+	// TODO: fix this
+	for (auto const &diagnostic : resolver_diagnostics) diagnostics.push_back(diagnostic);
 	debug(program);
+	PRINT_DIAGS_N_QUIT();
 	// TODO: Expression lowering
 	// TODO: Resolver (turns named identifiers and qualified identifiers into numbers)
 	// TODO: Type inference, coercion and typechecking
@@ -103,7 +109,7 @@ int main(void) {
 
 	// ---- Codegen
 	// TODO: codegen to LLVM IR
-	// TODO: inlining	
+	// TODO: inlining
 
 	return 0;
 }

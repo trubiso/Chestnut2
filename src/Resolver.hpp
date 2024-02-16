@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include "Box.hpp"
+#include "Diagnostic.hpp"
 #include "Program.hpp"
 #include "Type.hpp"
 
@@ -55,6 +56,6 @@ AST::Function::Signature resolve(AST::Function::Signature const &, Context &);
 AST::Function resolve(AST::Function const &, Context &);
 
 void register_(std::vector<Spanned<AST::Function>> &, Context &);
-void resolve(AST::Program &);
+[[nodiscard]] std::vector<Diagnostic> resolve(AST::Program &);
 
 }  // namespace Resolver
