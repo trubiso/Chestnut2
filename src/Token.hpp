@@ -15,7 +15,7 @@ struct Token {
 	};
 
 	enum class Keyword {
-		Let,
+		Const,
 		Mut,
 		Pure,
 		Func,

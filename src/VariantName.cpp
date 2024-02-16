@@ -19,8 +19,8 @@ char const *get_variant_name(Token::Kind kind) {
 char const *get_variant_name(Token::Keyword keyword) {
 	using enum Token::Keyword;
 	switch (keyword) {
-	case Let:
-		return "let";
+	case Const:
+		return "const";
 	case Mut:
 		return "mut";
 	case Pure:

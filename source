@@ -1,16 +1,16 @@
 func silly() void {
-	let a = 3 + 4 * -5 - 8 + 7
+	const a = 3 + 4 * -5 - 8 + 7
 	      + e
 	      - (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
 	mut b = 28
-	let k: i32 = 2
+	const k: i32 = 2
 	mut y: i32
 }
 
 func main() void {
-	let pure = 37
-	let mut = pure
-	let john = 19
+	const pure = 37
+	const mut = pure
+	const john = 19
 	john + pure = union
 	silly + john
 	silly(3, 4, 'a' - 'b')

@@ -6,7 +6,7 @@ namespace AST {
 
 Parser::Parser<Statement> statement_create(bool semicolon) {
 	using namespace Parser;
-	auto mutability = spanned(token_keyword(Token::Keyword::Let) >> constant(false) |
+	auto mutability = spanned(token_keyword(Token::Keyword::Const) >> constant(false) |
 	                          token_keyword(Token::Keyword::Mut) >> constant(true));
 	auto type_and_name = must(identifier_with_optional_type());
 	auto value = spanned(expression());
