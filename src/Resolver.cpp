@@ -32,6 +32,7 @@ std::string identifier_str(AST::Identifier const &identifier) {
 		}
 	} break;
 	case AST::Identifier::Kind::Resolved:
+	case AST::Identifier::Kind::ResolvedMany:
 		throw "unknown name is resolved identifier (should never happen)";
 	}
 	return identifier_str;
@@ -46,14 +47,25 @@ void unknown_name(Spanned<AST::Identifier> const &identifier, Context const &ctx
 	diagnostics.push_back(diagnostic);
 }
 
-Spanned<AST::Identifier> resolve_add(Spanned<AST::Identifier> const &identifier, Context &ctx) {
+Spanned<AST::Identifier> resolve_add(Spanned<AST::Identifier> const &identifier, Context &ctx,
+                                     bool func_id) {
 	if (identifier.value.kind == AST::Identifier::Kind::Resolved) return identifier;
 	// TODO: support qualified identifier
 	if (identifier.value.kind == AST::Identifier::Kind::Qualified) return identifier;
 	// keep in mind, this function shadows earlier declarations of identifier
 	std::string name = std::get<std::string>(identifier.value.value);
 	ID new_id = counter++;
-	ctx.name_to_id.insert_or_assign(name, new_id);
+	if (func_id) {
+		auto it = ctx.name_to_id_funcs.find(name);
+		if (it == ctx.name_to_id_funcs.end()) {
+			std::vector<ID> ids{new_id};
+			ctx.name_to_id_funcs.insert_or_assign(name, ids);
+		} else {
+			it->second.push_back(new_id);
+		}
+	} else {
+		ctx.name_to_id.insert_or_assign(name, new_id);
+	}
 	ctx.id_to_name.insert_or_assign(new_id, name);
 	ctx.id_to_span.insert_or_assign(new_id, identifier.span);
 	return Spanned<AST::Identifier>{
@@ -74,8 +86,21 @@ Spanned<AST::Identifier> resolve(Spanned<AST::Identifier> const &identifier, Con
 		std::string name = std::get<std::string>(identifier.value.value);
 		auto it = ctx.name_to_id.find(name);
 		if (it == ctx.name_to_id.end()) {
-			unknown_name(identifier, ctx);
-			return identifier;
+			auto other_it = ctx.name_to_id_funcs.find(name);
+			if (other_it == ctx.name_to_id_funcs.end()) {
+				unknown_name(identifier, ctx);
+				return identifier;
+
+			} else {
+				return Spanned<AST::Identifier>{
+				    .value =
+				        AST::Identifier{
+				            .kind = ResolvedMany,
+				            .value = other_it->second,
+				        },
+				    .span = identifier.span,
+				};
+			}
 		}
 		return Spanned<AST::Identifier>{.value =
 		                                    AST::Identifier{
@@ -90,6 +115,7 @@ Spanned<AST::Identifier> resolve(Spanned<AST::Identifier> const &identifier, Con
 		return identifier;
 		break;
 	case Resolved:
+	case ResolvedMany:
 		return identifier;  // why would we resolve an already-resolved identifier
 	}
 	throw "";
@@ -206,10 +232,10 @@ AST::Function::Signature resolve(AST::Function::Signature const &signature, Cont
 		    [&](Spanned<AST::Identifier> const &value) { return resolve_add(value, ctx); });
 
 	std::vector<Spanned<AST::IdentifierWithType>> transformed_arguments{};
-	std::transform(
-	    signature.arguments.value.cbegin(), signature.arguments.value.cend(),
-	    transformed_arguments.begin(),
-	    [&](Spanned<AST::IdentifierWithType> const &value) { return resolve_add(value, ctx); });
+	for (auto const &argument : signature.arguments.value) {
+		auto transformed = resolve_add(argument, ctx);
+		transformed_arguments.push_back(transformed);
+	}
 
 	auto return_type = resolve(signature.return_type, ctx);
 
@@ -239,7 +265,8 @@ AST::Function resolve(AST::Function const &function, Context &ctx) {
 }
 
 void register_(std::vector<Spanned<AST::Function>> &functions, Context &ctx) {
-	for (auto &function : functions) function.value.name = resolve_add(function.value.name, ctx);
+	for (auto &function : functions)
+		function.value.name = resolve_add(function.value.name, ctx, true);
 }
 
 std::vector<Diagnostic> resolve(AST::Program &program) {

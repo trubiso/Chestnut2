@@ -13,6 +13,7 @@ typedef size_t ID;
 
 struct Context {
 	std::map<std::string, ID> name_to_id{};
+	std::map<std::string, std::vector<ID>> name_to_id_funcs{};
 	std::unordered_map<ID, std::string> id_to_name{};
 	std::unordered_map<ID, Span> id_to_span{};
 	AST::Program const &program;
@@ -42,7 +43,8 @@ template <typename T> std::optional<T> resolve(std::optional<T> const &x, Contex
 
 template <typename T> Box<T> resolve(Box<T> const &x, Context &ctx) { return resolve(*x, ctx); }
 
-Spanned<AST::Identifier> resolve_add(Spanned<AST::Identifier> const &, Context &);
+Spanned<AST::Identifier> resolve_add(Spanned<AST::Identifier> const &, Context &,
+                                     bool func_id = false);
 AST::IdentifierWithType resolve_add(AST::IdentifierWithType const &, Context &);
 inline Spanned<AST::IdentifierWithType> resolve_add(Spanned<AST::IdentifierWithType> const &iwt,
                                                     Context &ctx) {

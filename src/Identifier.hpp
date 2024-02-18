@@ -14,6 +14,7 @@ struct Identifier {
 		Unqualified,
 		Qualified,
 		Resolved,
+		ResolvedMany,  // must resolve overload
 	};
 
 	struct QualifiedPath {
@@ -22,7 +23,7 @@ struct Identifier {
 	};
 
 	Kind kind;
-	std::variant<std::string, QualifiedPath, size_t> value;
+	std::variant<std::string, QualifiedPath, size_t, std::vector<size_t>> value;
 };
 
 Parser::Parser<Identifier> identifier();

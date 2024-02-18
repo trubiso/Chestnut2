@@ -25,6 +25,7 @@ void debug(AST::Program const &);
 void debug(Token::Symbol);
 
 inline void debug(std::string const &string) { std::cout << string; }
+inline void debug(size_t value) { std::cout << value; }
 
 template <typename T> void debug(std::optional<T> const &value) {
 	if (value.has_value()) debug(value.value());

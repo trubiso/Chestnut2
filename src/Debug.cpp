@@ -26,6 +26,11 @@ void debug(AST::Identifier const &identifier) {
 	case Resolved:
 		std::cout << "@" << std::get<size_t>(identifier.value);
 		break;
+	case ResolvedMany:
+		auto const &fragments = std::get<std::vector<size_t>>(identifier.value);
+		std::cout << "@(";
+		debug(fragments);
+		std::cout << ")";
 	}
 }
 

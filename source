@@ -1,15 +1,20 @@
 func silly() void {
+	const e = 30
+	mut abc = 48
 	const a = 3 + 4 * -5 - 8 + 7
 	      + e
-	      - (3 + 4) * 5 + abc::def - abc + "hey" - 'h' + ::im::here
+	      - (3 + 4) * 5 + abc + "hey" - 'h'
 	mut b = 28
 	const k: i32 = 2
 	mut y: i32
 }
 
+func silly(a: i32, b: i32, c: char) void {}
+
 func main() void {
 	const pure = 37
 	const mut = pure
+	const union = mut
 	const john = 19
 	john + pure = union
 	silly + john
